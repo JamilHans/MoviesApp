@@ -4,14 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.trainingandroid.mobiedbapp.data.model.movie.Result
-import com.trainingandroid.mobiedbapp.domain.usecase.GetPopulateMoviesUseCase
-import com.trainingandroid.mobiedbapp.domain.usecase.GetUpcomingMoviesUseCase
+import com.trainingandroid.domain.model.Result
+import com.trainingandroid.domain.usecase.GetPopulateMoviesUseCase
+import com.trainingandroid.domain.usecase.GetUpcomingMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel

@@ -1,6 +1,6 @@
 package com.trainingandroid.mobiedbapp.presentation.home
 
-import com.trainingandroid.mobiedbapp.domain.model.Movies
+import com.trainingandroid.domain.model.movie.Movies
 
 sealed class HomeState {
     class UpComingMoviesState(

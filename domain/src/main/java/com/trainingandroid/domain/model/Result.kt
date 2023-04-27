@@ -1,4 +1,4 @@
-package com.trainingandroid.mobiedbapp.data.model.movie
+package com.trainingandroid.domain.model
 
 sealed class Result<T>(val data:T?=null, val message:String?=null){
 

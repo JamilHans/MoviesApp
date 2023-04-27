@@ -1,4 +1,4 @@
-package com.trainingandroid.mobiedbapp.domain.model.detail
+package com.trainingandroid.domain.model.detail
 
 data class ProductionCompany(
     val id: Int,

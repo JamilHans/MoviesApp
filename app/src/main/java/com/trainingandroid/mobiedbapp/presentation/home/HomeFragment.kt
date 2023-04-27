@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.trainingandroid.mobiedbapp.R
 import com.trainingandroid.mobiedbapp.databinding.FragmentHomeBinding
-import com.trainingandroid.mobiedbapp.domain.model.Movies
+import com.trainingandroid.domain.model.movie.Movies
 import com.trainingandroid.mobiedbapp.presentation.adapters.MovieAdapter
 import com.trainingandroid.mobiedbapp.presentation.common.toast
 import dagger.hilt.android.AndroidEntryPoint

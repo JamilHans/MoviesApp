@@ -1,25 +1,24 @@
 package com.trainingandroid.mobiedbapp.framework
 
+import com.trainingandroid.domain.model.Result
+import com.trainingandroid.domain.model.detail.DetailMovie
+import com.trainingandroid.domain.model.detail.Genre
+import com.trainingandroid.domain.model.detail.ProductionCompany
+import com.trainingandroid.domain.model.detail.ProductionCountry
+import com.trainingandroid.domain.model.detail.SpokenLanguage
+import com.trainingandroid.domain.model.movie.Movies
 import com.trainingandroid.mobiedbapp.data.api.RemoteService
 import com.trainingandroid.mobiedbapp.data.datasource.MoviesRemoteDataSource
 import com.trainingandroid.mobiedbapp.data.model.movie.MovieResponse
-import com.trainingandroid.mobiedbapp.data.model.movie.Result
 import com.trainingandroid.mobiedbapp.data.model.moviedetail.GenreResponse
 import com.trainingandroid.mobiedbapp.data.model.moviedetail.MovieDetailResponse
 import com.trainingandroid.mobiedbapp.data.model.moviedetail.ProductionCompanyResponse
 import com.trainingandroid.mobiedbapp.data.model.moviedetail.ProductionCountryResponse
 import com.trainingandroid.mobiedbapp.data.model.moviedetail.SpokenLanguageResponse
-import com.trainingandroid.mobiedbapp.domain.model.Movies
-import com.trainingandroid.mobiedbapp.domain.model.detail.DetailMovie
-import com.trainingandroid.mobiedbapp.domain.model.detail.Genre
-import com.trainingandroid.mobiedbapp.domain.model.detail.ProductionCompany
-import com.trainingandroid.mobiedbapp.domain.model.detail.ProductionCountry
-import com.trainingandroid.mobiedbapp.domain.model.detail.SpokenLanguage
 import retrofit2.HttpException
 import java.io.IOException
-import javax.inject.Inject
 
-class MoviesRemoteDataSourceImp @Inject constructor(private val remoteService: RemoteService) :
+class MoviesRemoteDataSourceImp(private val remoteService: RemoteService) :
     MoviesRemoteDataSource {
 
 
@@ -112,7 +111,6 @@ private fun ProductionCompanyResponse.toDomainModel(): ProductionCompany =
     ProductionCompany(
         id, logoPath, name, originCountry
     )
-
 
 
 private fun ProductionCountryResponse.toDomainModel(): ProductionCountry =

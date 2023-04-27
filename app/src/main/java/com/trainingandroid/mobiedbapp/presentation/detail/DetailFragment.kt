@@ -10,7 +10,7 @@ import androidx.navigation.fragment.navArgs
 import com.squareup.picasso.Picasso
 import com.trainingandroid.mobiedbapp.R
 import com.trainingandroid.mobiedbapp.databinding.FragmentDetailBinding
-import com.trainingandroid.mobiedbapp.domain.model.detail.DetailMovie
+import com.trainingandroid.domain.model.detail.DetailMovie
 import com.trainingandroid.mobiedbapp.presentation.common.toast
 import dagger.hilt.android.AndroidEntryPoint
 

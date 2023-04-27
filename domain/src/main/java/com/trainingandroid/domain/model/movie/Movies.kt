@@ -1,4 +1,4 @@
-package com.trainingandroid.mobiedbapp.domain.model
+package com.trainingandroid.domain.model.movie
 
 data class Movies(
     val adult: Boolean,

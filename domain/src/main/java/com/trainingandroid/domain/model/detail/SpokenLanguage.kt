@@ -1,4 +1,4 @@
-package com.trainingandroid.mobiedbapp.domain.model.detail
+package com.trainingandroid.domain.model.detail
 
 data class SpokenLanguage(
     val englishName: String,

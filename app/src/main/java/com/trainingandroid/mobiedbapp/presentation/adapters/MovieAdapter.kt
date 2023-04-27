@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.trainingandroid.mobiedbapp.R
 import com.trainingandroid.mobiedbapp.databinding.ItemMovieBinding
-import com.trainingandroid.mobiedbapp.domain.model.Movies
+import com.trainingandroid.domain.model.movie.Movies
 
 class MovieAdapter constructor(
     var movies: List<Movies> = listOf(),

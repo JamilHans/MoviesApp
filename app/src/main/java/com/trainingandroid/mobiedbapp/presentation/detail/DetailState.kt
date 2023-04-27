@@ -1,6 +1,6 @@
 package com.trainingandroid.mobiedbapp.presentation.detail
 
-import com.trainingandroid.mobiedbapp.domain.model.detail.DetailMovie
+import com.trainingandroid.domain.model.detail.DetailMovie
 
 data class DetailState(
     val isLoading: Boolean = false,
