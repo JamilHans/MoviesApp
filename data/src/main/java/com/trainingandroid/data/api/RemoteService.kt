@@ -1,8 +1,8 @@
-package com.trainingandroid.mobiedbapp.data.api
+package com.trainingandroid.data.api
 
-import com.trainingandroid.mobiedbapp.data.model.movie.MovieResponse
-import com.trainingandroid.mobiedbapp.data.model.movie.WrappedListResponse
-import com.trainingandroid.mobiedbapp.data.model.moviedetail.MovieDetailResponse
+import com.trainingandroid.data.model.movie.MovieResponse
+import com.trainingandroid.data.model.movie.WrappedListResponse
+import com.trainingandroid.data.model.moviedetail.MovieDetailResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

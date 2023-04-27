@@ -1,4 +1,4 @@
-package com.trainingandroid.mobiedbapp.data.model.moviedetail
+package com.trainingandroid.data.model.moviedetail
 
 import com.google.gson.annotations.SerializedName
 

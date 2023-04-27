@@ -7,20 +7,19 @@ import com.trainingandroid.domain.model.detail.ProductionCompany
 import com.trainingandroid.domain.model.detail.ProductionCountry
 import com.trainingandroid.domain.model.detail.SpokenLanguage
 import com.trainingandroid.domain.model.movie.Movies
-import com.trainingandroid.mobiedbapp.data.api.RemoteService
-import com.trainingandroid.mobiedbapp.data.datasource.MoviesRemoteDataSource
-import com.trainingandroid.mobiedbapp.data.model.movie.MovieResponse
-import com.trainingandroid.mobiedbapp.data.model.moviedetail.GenreResponse
-import com.trainingandroid.mobiedbapp.data.model.moviedetail.MovieDetailResponse
-import com.trainingandroid.mobiedbapp.data.model.moviedetail.ProductionCompanyResponse
-import com.trainingandroid.mobiedbapp.data.model.moviedetail.ProductionCountryResponse
-import com.trainingandroid.mobiedbapp.data.model.moviedetail.SpokenLanguageResponse
+import com.trainingandroid.data.api.RemoteService
+import com.trainingandroid.data.datasource.MoviesRemoteDataSource
+import com.trainingandroid.data.model.movie.MovieResponse
+import com.trainingandroid.data.model.moviedetail.GenreResponse
+import com.trainingandroid.data.model.moviedetail.MovieDetailResponse
+import com.trainingandroid.data.model.moviedetail.ProductionCompanyResponse
+import com.trainingandroid.data.model.moviedetail.ProductionCountryResponse
+import com.trainingandroid.data.model.moviedetail.SpokenLanguageResponse
 import retrofit2.HttpException
 import java.io.IOException
 
 class MoviesRemoteDataSourceImp(private val remoteService: RemoteService) :
     MoviesRemoteDataSource {
-
 
     override suspend fun getUpcomingMovies(): Result<List<Movies>> {
         return try {

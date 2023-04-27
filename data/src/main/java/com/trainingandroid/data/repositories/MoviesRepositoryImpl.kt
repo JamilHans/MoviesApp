@@ -1,7 +1,7 @@
-package com.trainingandroid.mobiedbapp.data.repositories
+package com.trainingandroid.data.repositories
 
+import com.trainingandroid.data.datasource.MoviesRemoteDataSource
 import com.trainingandroid.domain.repositories.MoviesRepository
-import com.trainingandroid.mobiedbapp.data.datasource.MoviesRemoteDataSource
 
 class MoviesRepositoryImpl constructor(
     private val moviesRemoteDataSource: MoviesRemoteDataSource

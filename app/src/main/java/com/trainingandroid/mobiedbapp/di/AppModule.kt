@@ -4,9 +4,9 @@ import com.trainingandroid.domain.repositories.MoviesRepository
 import com.trainingandroid.domain.usecase.GetDetailMovieUseCase
 import com.trainingandroid.domain.usecase.GetPopulateMoviesUseCase
 import com.trainingandroid.domain.usecase.GetUpcomingMoviesUseCase
-import com.trainingandroid.mobiedbapp.data.api.RemoteService
-import com.trainingandroid.mobiedbapp.data.datasource.MoviesRemoteDataSource
-import com.trainingandroid.mobiedbapp.data.repositories.MoviesRepositoryImpl
+import com.trainingandroid.data.api.RemoteService
+import com.trainingandroid.data.datasource.MoviesRemoteDataSource
+import com.trainingandroid.data.repositories.MoviesRepositoryImpl
 import com.trainingandroid.mobiedbapp.framework.MoviesRemoteDataSourceImp
 import dagger.Module
 import dagger.Provides

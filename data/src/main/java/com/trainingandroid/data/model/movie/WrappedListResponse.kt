@@ -1,4 +1,4 @@
-package com.trainingandroid.mobiedbapp.data.model.movie
+package com.trainingandroid.data.model.movie
 
 data class WrappedListResponse<T>(
     val dates: Dates,

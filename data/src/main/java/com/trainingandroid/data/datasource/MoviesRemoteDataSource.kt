@@ -1,8 +1,8 @@
-package com.trainingandroid.mobiedbapp.data.datasource
+package com.trainingandroid.data.datasource
 
-import com.trainingandroid.domain.model.Result
 import com.trainingandroid.domain.model.detail.DetailMovie
 import com.trainingandroid.domain.model.movie.Movies
+import com.trainingandroid.domain.model.Result
 
 interface MoviesRemoteDataSource {
 
