@@ -7,6 +7,9 @@ import com.trainingandroid.domain.usecase.GetUpcomingMoviesUseCaseImpl
 import com.trainingandroid.data.api.RemoteService
 import com.trainingandroid.data.datasource.MoviesRemoteDataSource
 import com.trainingandroid.data.repositories.MoviesRepositoryImpl
+import com.trainingandroid.domain.usecase.GetDetailMovieUseCase
+import com.trainingandroid.domain.usecase.GetPopulateMoviesUseCase
+import com.trainingandroid.domain.usecase.GetUpcomingMoviesUseCase
 import com.trainingandroid.mobiedbapp.framework.MoviesRemoteDataSourceImp
 import dagger.Module
 import dagger.Provides
@@ -46,17 +49,17 @@ class AppBindModule {
 class UseCaseModule {
 
     @Provides
-    fun provideGetDetailMovieUseCase(recipeRepository: MoviesRepository): GetDetailMovieUseCaseImpl {
+    fun provideGetDetailMovieUseCase(recipeRepository: MoviesRepository): GetDetailMovieUseCase {
         return GetDetailMovieUseCaseImpl(recipeRepository)
     }
 
     @Provides
-    fun provideGetPopulateMoviesUseCase(recipeRepository: MoviesRepository): GetPopulateMoviesUseCaseImpl {
+    fun provideGetPopulateMoviesUseCase(recipeRepository: MoviesRepository): GetPopulateMoviesUseCase {
         return GetPopulateMoviesUseCaseImpl(recipeRepository)
     }
 
     @Provides
-    fun provideGetUpcomingMoviesUseCase(recipeRepository: MoviesRepository): GetUpcomingMoviesUseCaseImpl {
+    fun provideGetUpcomingMoviesUseCase(recipeRepository: MoviesRepository): GetUpcomingMoviesUseCase {
         return GetUpcomingMoviesUseCaseImpl(recipeRepository)
     }
 

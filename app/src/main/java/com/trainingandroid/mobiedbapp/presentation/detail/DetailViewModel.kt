@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.trainingandroid.domain.model.Result
-import com.trainingandroid.domain.usecase.GetDetailMovieUseCaseImpl
+import com.trainingandroid.domain.usecase.GetDetailMovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
-    private val getDetailMovieUseCaseImpl: GetDetailMovieUseCaseImpl,
+    private val getDetailMovieUseCase: GetDetailMovieUseCase,
 ) : ViewModel() {
     private val _state = MutableLiveData<DetailState>()
     val state: LiveData<DetailState> = _state
@@ -23,7 +23,7 @@ class DetailViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.Main) {
             _state.value = DetailState(isLoading = true)
             val response = withContext(Dispatchers.IO) {
-                getDetailMovieUseCaseImpl.getDetailMovie(id)
+                getDetailMovieUseCase.getDetailMovie(id)
             }
             when (response) {
                 is Result.Error -> {
