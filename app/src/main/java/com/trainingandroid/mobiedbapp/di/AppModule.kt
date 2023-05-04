@@ -1,7 +1,7 @@
 package com.trainingandroid.mobiedbapp.di
 
 import com.trainingandroid.domain.repositories.MoviesRepository
-import com.trainingandroid.domain.usecase.GetDetailMovieUseCase
+import com.trainingandroid.domain.usecase.GetDetailMovieUseCaseImpl
 import com.trainingandroid.domain.usecase.GetPopulateMoviesUseCase
 import com.trainingandroid.domain.usecase.GetUpcomingMoviesUseCase
 import com.trainingandroid.data.api.RemoteService
@@ -46,8 +46,8 @@ class AppBindModule {
 class UseCaseModule {
 
     @Provides
-    fun provideGetDetailMovieUseCase(recipeRepository: MoviesRepository): GetDetailMovieUseCase {
-        return GetDetailMovieUseCase(recipeRepository)
+    fun provideGetDetailMovieUseCase(recipeRepository: MoviesRepository): GetDetailMovieUseCaseImpl {
+        return GetDetailMovieUseCaseImpl(recipeRepository)
     }
 
     @Provides
