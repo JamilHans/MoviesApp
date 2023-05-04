@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
-        private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: HomeViewModel by viewModels()
     private var movies: List<Movies> = listOf()
     private lateinit var adapterUpcoming: MovieAdapter
     private lateinit var adapterPopulate: MovieAdapter
@@ -41,14 +41,14 @@ class HomeFragment : Fragment() {
     }
 
     private fun setUpAdapter() {
-        adapterUpcoming = MovieAdapter(){ movies ->
+        adapterUpcoming = MovieAdapter() { movies ->
             val id = movies.id
             val directions = HomeFragmentDirections.actionHomeFragmentToDetailFragment(id)
             Navigation.findNavController(binding.root).navigate(directions)
         }
         binding.rvUpcomingReleases.adapter = adapterUpcoming
 
-        adapterPopulate = MovieAdapter(){ movies ->
+        adapterPopulate = MovieAdapter() { movies ->
             val id = movies.id
             val directions = HomeFragmentDirections.actionHomeFragmentToDetailFragment(id)
             Navigation.findNavController(binding.root).navigate(directions)
@@ -57,10 +57,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun observers() {
-        viewModel.stateUpcomingMovie.observe(viewLifecycleOwner){
+        viewModel.stateUpcomingMovie.observe(viewLifecycleOwner) {
             updateUI(it)
         }
-        viewModel.statePopulateMovieL.observe(viewLifecycleOwner){
+        viewModel.statePopulateMovieL.observe(viewLifecycleOwner) {
             updatePopulate(it)
         }
 
@@ -79,7 +79,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun updateUI(state: HomeState.UpComingMoviesState){
+    private fun updateUI(state: HomeState.UpComingMoviesState) {
         state.isLoading.let { condition ->
             if (condition) binding.progressBar.visibility = View.VISIBLE
             else binding.progressBar.visibility = View.GONE
