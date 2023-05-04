@@ -2,8 +2,8 @@ package com.trainingandroid.mobiedbapp.di
 
 import com.trainingandroid.domain.repositories.MoviesRepository
 import com.trainingandroid.domain.usecase.GetDetailMovieUseCaseImpl
-import com.trainingandroid.domain.usecase.GetPopulateMoviesUseCase
-import com.trainingandroid.domain.usecase.GetUpcomingMoviesUseCase
+import com.trainingandroid.domain.usecase.GetPopulateMoviesUseCaseImpl
+import com.trainingandroid.domain.usecase.GetUpcomingMoviesUseCaseImpl
 import com.trainingandroid.data.api.RemoteService
 import com.trainingandroid.data.datasource.MoviesRemoteDataSource
 import com.trainingandroid.data.repositories.MoviesRepositoryImpl
@@ -51,13 +51,13 @@ class UseCaseModule {
     }
 
     @Provides
-    fun provideGetPopulateMoviesUseCase(recipeRepository: MoviesRepository): GetPopulateMoviesUseCase {
-        return GetPopulateMoviesUseCase(recipeRepository)
+    fun provideGetPopulateMoviesUseCase(recipeRepository: MoviesRepository): GetPopulateMoviesUseCaseImpl {
+        return GetPopulateMoviesUseCaseImpl(recipeRepository)
     }
 
     @Provides
-    fun provideGetUpcomingMoviesUseCase(recipeRepository: MoviesRepository): GetUpcomingMoviesUseCase {
-        return GetUpcomingMoviesUseCase(recipeRepository)
+    fun provideGetUpcomingMoviesUseCase(recipeRepository: MoviesRepository): GetUpcomingMoviesUseCaseImpl {
+        return GetUpcomingMoviesUseCaseImpl(recipeRepository)
     }
 
 }

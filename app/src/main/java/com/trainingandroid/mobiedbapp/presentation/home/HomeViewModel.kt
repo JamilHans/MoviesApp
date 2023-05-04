@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.trainingandroid.domain.model.Result
-import com.trainingandroid.domain.usecase.GetPopulateMoviesUseCase
-import com.trainingandroid.domain.usecase.GetUpcomingMoviesUseCase
+import com.trainingandroid.domain.usecase.GetPopulateMoviesUseCaseImpl
+import com.trainingandroid.domain.usecase.GetUpcomingMoviesUseCaseImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,8 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase,
-    private val getPopulateMoviesUseCase: GetPopulateMoviesUseCase
+    private val getUpcomingMoviesUseCaseImpl: GetUpcomingMoviesUseCaseImpl,
+    private val getPopulateMoviesUseCaseImpl: GetPopulateMoviesUseCaseImpl
 ) : ViewModel() {
 
     private val _stateUpcomingMovie = MutableLiveData<HomeState.UpComingMoviesState>()
@@ -38,7 +38,7 @@ class HomeViewModel @Inject constructor(
             _stateUpcomingMovie.value = HomeState.UpComingMoviesState(isLoading = true)
 
             val response = withContext(Dispatchers.IO) {
-                getUpcomingMoviesUseCase.getUpcomingMovies()
+                getUpcomingMoviesUseCaseImpl.getUpcomingMovies()
             }
             _stateUpcomingMovie.value = HomeState.UpComingMoviesState(isLoading = false)
 
@@ -63,7 +63,7 @@ class HomeViewModel @Inject constructor(
 
             _statePopulateMovie.value = HomeState.PopulateMoviesState(isLoading = true)
             val response = withContext(Dispatchers.IO) {
-                getPopulateMoviesUseCase.getPopulateMovies()
+                getPopulateMoviesUseCaseImpl.getPopulateMovies()
             }
             _statePopulateMovie.value = HomeState.PopulateMoviesState(isLoading = false)
 
