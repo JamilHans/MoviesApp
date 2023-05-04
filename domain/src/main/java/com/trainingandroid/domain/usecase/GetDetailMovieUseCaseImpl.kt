@@ -4,6 +4,6 @@ import com.trainingandroid.domain.repositories.MoviesRepository
 
 class GetDetailMovieUseCaseImpl(
     private val moviesRepository: MoviesRepository
-) {
-    suspend fun getDetailMovie(id: Int) = moviesRepository.getDetailMovie(id)
+) : GetDetailMovieUseCase {
+    override suspend fun getDetailMovie(id: Int) = moviesRepository.getDetailMovie(id)
 }

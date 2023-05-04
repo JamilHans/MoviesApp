@@ -4,8 +4,8 @@ import com.trainingandroid.domain.repositories.MoviesRepository
 
 class GetUpcomingMoviesUseCaseImpl(
     private val moviesRepository: MoviesRepository
-) {
+) : GetUpcomingMoviesUseCase {
 
-    suspend fun getUpcomingMovies() = moviesRepository.getUpcomingMovies()
+    override suspend fun getUpcomingMovies() = moviesRepository.getUpcomingMovies()
 
 }
