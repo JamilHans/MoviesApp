@@ -6,6 +6,6 @@ class GetUpcomingMoviesUseCaseImpl(
     private val moviesRepository: MoviesRepository
 ) : GetUpcomingMoviesUseCase {
 
-    override suspend fun getUpcomingMovies() = moviesRepository.getUpcomingMovies()
+    override suspend operator fun invoke() = moviesRepository.getUpcomingMovies()
 
 }

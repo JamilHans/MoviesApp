@@ -4,5 +4,5 @@ import com.trainingandroid.domain.model.Result
 import com.trainingandroid.domain.model.movie.Movies
 
 interface GetPopulateMoviesUseCase {
-    suspend fun getPopulateMovies(): Result<List<Movies>>
+    suspend operator fun invoke(): Result<List<Movies>>
 }

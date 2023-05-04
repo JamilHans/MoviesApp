@@ -23,7 +23,7 @@ class DetailViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.Main) {
             _state.value = DetailState(isLoading = true)
             val response = withContext(Dispatchers.IO) {
-                getDetailMovieUseCase.getDetailMovie(id)
+                getDetailMovieUseCase(id)
             }
             when (response) {
                 is Result.Error -> {

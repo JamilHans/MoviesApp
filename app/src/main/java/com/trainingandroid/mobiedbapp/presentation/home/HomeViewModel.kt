@@ -38,7 +38,7 @@ class HomeViewModel @Inject constructor(
             _stateUpcomingMovie.value = HomeState.UpComingMoviesState(isLoading = true)
 
             val response = withContext(Dispatchers.IO) {
-                getUpcomingMoviesUseCase.getUpcomingMovies()
+                getUpcomingMoviesUseCase()
             }
             _stateUpcomingMovie.value = HomeState.UpComingMoviesState(isLoading = false)
 
@@ -63,7 +63,7 @@ class HomeViewModel @Inject constructor(
 
             _statePopulateMovie.value = HomeState.PopulateMoviesState(isLoading = true)
             val response = withContext(Dispatchers.IO) {
-                getPopulateMoviesUseCase.getPopulateMovies()
+                getPopulateMoviesUseCase()
             }
             _statePopulateMovie.value = HomeState.PopulateMoviesState(isLoading = false)
 
