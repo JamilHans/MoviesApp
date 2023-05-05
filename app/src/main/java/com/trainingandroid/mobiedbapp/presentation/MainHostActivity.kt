@@ -1,7 +1,8 @@
-package com.trainingandroid.mobiedbapp
+package com.trainingandroid.mobiedbapp.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.trainingandroid.mobiedbapp.R
 import dagger.hilt.android.AndroidEntryPoint
 
 

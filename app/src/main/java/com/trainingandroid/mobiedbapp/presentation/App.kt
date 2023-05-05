@@ -1,4 +1,4 @@
-package com.trainingandroid.mobiedbapp
+package com.trainingandroid.mobiedbapp.presentation
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

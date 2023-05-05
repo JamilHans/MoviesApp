@@ -1,4 +1,4 @@
-package com.trainingandroid.mobiedbapp.di
+package com.trainingandroid.mobiedbapp.presentation.di
 
 import com.trainingandroid.domain.repositories.MoviesRepository
 import com.trainingandroid.domain.usecase.GetDetailMovieUseCaseImpl

@@ -44,7 +44,7 @@ class GetPopulateMoviesUseCaseImplTest {
     @Test
     fun `Getting populate movie should return populate movie when return has success`() {
         runBlocking {
-            val successResult = Result.Success<List<Movies>>(data = listPopulateMovies)
+            val successResult = Result.Success(data = listPopulateMovies)
             whenever(
                 recipeRepository.getPopulateMovies()
             ).thenReturn(

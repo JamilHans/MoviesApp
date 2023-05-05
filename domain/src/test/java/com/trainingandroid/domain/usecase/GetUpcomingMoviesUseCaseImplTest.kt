@@ -45,7 +45,7 @@ class GetUpcomingMoviesUseCaseImplTest {
     @Test
     fun `Getting upcoming movie should return upcoming movie when return has success`() {
         runBlocking {
-            val successResult = Result.Success<List<Movies>>(data = listUpcomingMovies)
+            val successResult = Result.Success(data = listUpcomingMovies)
             whenever(
                 recipeRepository.getUpcomingMovies()
             ).thenReturn(

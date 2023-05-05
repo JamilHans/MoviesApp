@@ -71,7 +71,7 @@ class GetDetailMovieUseCaseImplTest {
     @Test
     fun `Getting detail movie should return detail movie when return has success`() {
         runBlocking {
-            val successResult = Result.Success<DetailMovie>(data = detailMovie)
+            val successResult = Result.Success(data = detailMovie)
             val id = 1
             whenever(
                 recipeRepository.getDetailMovie(id)
