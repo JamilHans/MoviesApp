@@ -10,7 +10,7 @@ import com.trainingandroid.data.repositories.MoviesRepositoryImpl
 import com.trainingandroid.domain.usecase.GetDetailMovieUseCase
 import com.trainingandroid.domain.usecase.GetPopulateMoviesUseCase
 import com.trainingandroid.domain.usecase.GetUpcomingMoviesUseCase
-import com.trainingandroid.mobiedbapp.framework.MoviesRemoteDataSourceImp
+import com.trainingandroid.data.datasource.MoviesRemoteDataSourceImp
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

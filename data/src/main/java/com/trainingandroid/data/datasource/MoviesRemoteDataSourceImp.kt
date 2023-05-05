@@ -1,5 +1,12 @@
-package com.trainingandroid.mobiedbapp.framework
+package com.trainingandroid.data.datasource
 
+import com.trainingandroid.data.api.RemoteService
+import com.trainingandroid.data.model.movie.MovieResponse
+import com.trainingandroid.data.model.moviedetail.GenreResponse
+import com.trainingandroid.data.model.moviedetail.MovieDetailResponse
+import com.trainingandroid.data.model.moviedetail.ProductionCompanyResponse
+import com.trainingandroid.data.model.moviedetail.ProductionCountryResponse
+import com.trainingandroid.data.model.moviedetail.SpokenLanguageResponse
 import com.trainingandroid.domain.model.Result
 import com.trainingandroid.domain.model.detail.DetailMovie
 import com.trainingandroid.domain.model.detail.Genre
@@ -7,14 +14,6 @@ import com.trainingandroid.domain.model.detail.ProductionCompany
 import com.trainingandroid.domain.model.detail.ProductionCountry
 import com.trainingandroid.domain.model.detail.SpokenLanguage
 import com.trainingandroid.domain.model.movie.Movies
-import com.trainingandroid.data.api.RemoteService
-import com.trainingandroid.data.datasource.MoviesRemoteDataSource
-import com.trainingandroid.data.model.movie.MovieResponse
-import com.trainingandroid.data.model.moviedetail.GenreResponse
-import com.trainingandroid.data.model.moviedetail.MovieDetailResponse
-import com.trainingandroid.data.model.moviedetail.ProductionCompanyResponse
-import com.trainingandroid.data.model.moviedetail.ProductionCountryResponse
-import com.trainingandroid.data.model.moviedetail.SpokenLanguageResponse
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -54,7 +53,6 @@ class MoviesRemoteDataSourceImp(private val remoteService: RemoteService) :
         }
     }
 }
-
 
 private fun MovieResponse.toDomainModel():
         Movies = Movies(
@@ -122,3 +120,4 @@ private fun SpokenLanguageResponse.toDomainModel(): SpokenLanguage =
     SpokenLanguage(
         englishName, iso, name
     )
+
