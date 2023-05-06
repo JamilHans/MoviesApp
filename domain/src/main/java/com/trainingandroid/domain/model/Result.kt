@@ -1,7 +1,13 @@
 package com.trainingandroid.domain.model
 
-sealed class Result<T>(val data:T?=null, val message:String?=null){
+sealed class Result<T>(
+    open val data: T? = null,
+    open val message: String? = null,
+) {
 
-    class Success<T>(data:T?) : Result<T>(data)
-    class Error<T>(message: String, data:T?=null) : Result<T>(data,message)
+    data class Success<T>(override val data: T?) : Result<T>(data)
+    data class Error<T>(
+        override val message: String,
+        override val data: T? = null,
+    ) : Result<T>(data, message)
 }
