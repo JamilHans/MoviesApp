@@ -25,6 +25,7 @@ class DetailViewModel @Inject constructor(
             val response = withContext(Dispatchers.IO) {
                 getDetailMovieUseCase(id)
             }
+            _state.value = DetailState(isLoading = false)
             when (response) {
                 is Result.Error -> {
                     _state.value = DetailState(error = response.message)
