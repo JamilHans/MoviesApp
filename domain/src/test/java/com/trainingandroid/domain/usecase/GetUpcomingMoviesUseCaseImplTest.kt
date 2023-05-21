@@ -1,6 +1,6 @@
 package com.trainingandroid.domain.usecase
 
-import com.trainingandroid.domain.model.Result
+import com.trainingandroid.domain.resource.ResultType
 import com.trainingandroid.domain.model.movie.Movies
 import com.trainingandroid.domain.repositories.MoviesRepository
 import kotlinx.coroutines.runBlocking
@@ -31,28 +31,28 @@ class GetUpcomingMoviesUseCaseImplTest {
     @Test
     fun `Getting upcoming movie should return error when return has failure`() {
         runBlocking {
-            val errorResult = Result.Error<List<Movies>>(message = "", null)
+            val errorResultType = ResultType.Error<List<Movies>>(message = "", null)
             whenever(
                 recipeRepository.getUpcomingMovies()
             ).thenReturn(
-                errorResult
+                errorResultType
             )
             val result = sut()
-            assertEquals(result, errorResult)
+            assertEquals(result, errorResultType)
         }
     }
 
     @Test
     fun `Getting upcoming movie should return upcoming movie when return has success`() {
         runBlocking {
-            val successResult = Result.Success(data = listUpcomingMovies)
+            val successResultType = ResultType.Success(data = listUpcomingMovies)
             whenever(
                 recipeRepository.getUpcomingMovies()
             ).thenReturn(
-                successResult
+                successResultType
             )
             val result = sut()
-            assertEquals(result, successResult)
+            assertEquals(result, successResultType)
         }
     }
 

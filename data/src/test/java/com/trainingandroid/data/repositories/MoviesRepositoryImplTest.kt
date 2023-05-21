@@ -1,7 +1,7 @@
 package com.trainingandroid.data.repositories
 
 import com.trainingandroid.data.datasource.MoviesRemoteDataSource
-import com.trainingandroid.domain.model.Result
+import com.trainingandroid.domain.resource.ResultType
 import com.trainingandroid.domain.model.detail.DetailMovie
 import com.trainingandroid.domain.model.movie.Movies
 import com.trainingandroid.domain.repositories.MoviesRepository
@@ -60,84 +60,84 @@ class MoviesRepositoryImplTest {
     @Test
     fun `Getting upcoming movie should return error when return has failure`() {
         runBlocking {
-            val errorResult = Result.Error<List<Movies>>(message = "", null)
+            val errorResultType = ResultType.Error<List<Movies>>(message = "", null)
             whenever(
                 moviesRemoteDataSource.getUpcomingMovies()
             ).thenReturn(
-                errorResult
+                errorResultType
             )
             val result = sut.getUpcomingMovies()
-            assertEquals(result, errorResult)
+            assertEquals(result, errorResultType)
         }
     }
 
     @Test
     fun `Getting upcoming movie should return upcoming movie when return has success`() {
         runBlocking {
-            val successResult = Result.Success(data = listMovies)
+            val successResultType = ResultType.Success(data = listMovies)
             whenever(
                 moviesRemoteDataSource.getUpcomingMovies()
             ).thenReturn(
-                successResult
+                successResultType
             )
             val result = sut.getUpcomingMovies()
-            assertEquals(result, successResult)
+            assertEquals(result, successResultType)
         }
     }
 
     @Test
     fun `Getting populate movie should return error when return has failure`() {
         runBlocking {
-            val errorResult = Result.Error<List<Movies>>(message = "", null)
+            val errorResultType = ResultType.Error<List<Movies>>(message = "", null)
             whenever(
                 moviesRemoteDataSource.getPopulateMovies()
             ).thenReturn(
-                errorResult
+                errorResultType
             )
             val result = sut.getPopulateMovies()
-            assertEquals(result, errorResult)
+            assertEquals(result, errorResultType)
         }
     }
 
     @Test
     fun `Getting populate movie should return populate movie when return has success`() {
         runBlocking {
-            val successResult = Result.Success(data = listMovies)
+            val successResultType = ResultType.Success(data = listMovies)
             whenever(
                 moviesRemoteDataSource.getPopulateMovies()
             ).thenReturn(
-                successResult
+                successResultType
             )
             val result = sut.getPopulateMovies()
-            assertEquals(result, successResult)
+            assertEquals(result, successResultType)
         }
     }
 
     @Test
     fun `Getting detail movie should return error when return has failure`() {
         runBlocking {
-            val errorResult = Result.Error<DetailMovie>(message = "", null)
+            val errorResultType = ResultType.Error<DetailMovie>(message = "", null)
             whenever(
                 moviesRemoteDataSource.getDetailMovie(1)
             ).thenReturn(
-                errorResult
+                errorResultType
             )
             val result = sut.getDetailMovie(1)
-            assertEquals(result, errorResult)
+            assertEquals(result, errorResultType)
         }
     }
 
     @Test
     fun `Getting detail movie should return detail movie when return has success`() {
         runBlocking {
-            val successResult = Result.Success(data = detailMovie)
+            val successResultType = ResultType.Success(data = detailMovie)
             whenever(
                 moviesRemoteDataSource.getDetailMovie(1)
             ).thenReturn(
-                successResult
+                successResultType
             )
             val result = sut.getDetailMovie(1)
-            assertEquals(result, successResult)
+            assertEquals(result, successResultType)
         }
     }
 

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.trainingandroid.domain.model.Result
+import com.trainingandroid.domain.resource.ResultType
 import com.trainingandroid.domain.usecase.GetDetailMovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -27,11 +27,11 @@ class DetailViewModel @Inject constructor(
             }
             _state.value = DetailState(isLoading = false)
             when (response) {
-                is Result.Error -> {
+                is ResultType.Error -> {
                     _state.value = DetailState(error = response.message)
                 }
 
-                is Result.Success -> {
+                is ResultType.Success -> {
                     _state.value = DetailState(detailMovie = response.data)
                 }
             }
