@@ -7,7 +7,7 @@ sealed class ResultType<T>(
 
     data class Success<T>(override val data: T?) : ResultType<T>(data)
     data class Error<T>(
-        override val message: String,
+        override val message: String = "",
         override val data: T? = null,
     ) : ResultType<T>(data, message)
 }
