@@ -1,8 +1,9 @@
 package com.trainingandroid.domain.usecase
 
-import com.trainingandroid.domain.resource.ResultType
+import com.trainingandroid.domain.model.error.Error
 import com.trainingandroid.domain.model.movie.Movies
 import com.trainingandroid.domain.repositories.MoviesRepository
+import com.trainingandroid.domain.resource.ResultType
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -30,7 +31,7 @@ class GetPopulateMoviesUseCaseImplTest {
     @Test
     fun `Getting populate movie should return error when return has failure`() {
         runBlocking {
-            val errorResultType = ResultType.Error<List<Movies>>(message = "", null)
+            val errorResultType = ResultType.Error<List<Movies>, Error>(Error())
             whenever(
                 recipeRepository.getPopulateMovies()
             ).thenReturn(
@@ -44,7 +45,7 @@ class GetPopulateMoviesUseCaseImplTest {
     @Test
     fun `Getting populate movie should return populate movie when return has success`() {
         runBlocking {
-            val successResultType = ResultType.Success(data = listPopulateMovies)
+            val successResultType = ResultType.Success<List<Movies>, Error>(listPopulateMovies)
             whenever(
                 recipeRepository.getPopulateMovies()
             ).thenReturn(
