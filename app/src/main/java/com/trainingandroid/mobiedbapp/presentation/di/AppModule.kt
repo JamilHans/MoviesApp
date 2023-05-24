@@ -1,36 +1,40 @@
 package com.trainingandroid.mobiedbapp.presentation.di
 
-import com.trainingandroid.domain.repositories.MoviesRepository
-import com.trainingandroid.domain.usecase.GetDetailMovieUseCaseImpl
-import com.trainingandroid.domain.usecase.GetPopulateMoviesUseCaseImpl
-import com.trainingandroid.domain.usecase.GetUpcomingMoviesUseCaseImpl
+import com.trainingandroid.data.api.NetworkResponseAdapterFactory
 import com.trainingandroid.data.api.RemoteService
 import com.trainingandroid.data.datasource.MoviesRemoteDataSource
-import com.trainingandroid.data.repositories.MoviesRepositoryImpl
-import com.trainingandroid.domain.usecase.GetDetailMovieUseCase
-import com.trainingandroid.domain.usecase.GetPopulateMoviesUseCase
-import com.trainingandroid.domain.usecase.GetUpcomingMoviesUseCase
 import com.trainingandroid.data.datasource.MoviesRemoteDataSourceImp
+import com.trainingandroid.data.repositories.MoviesRepositoryImpl
+import com.trainingandroid.domain.repositories.MoviesRepository
+import com.trainingandroid.domain.usecase.GetDetailMovieUseCase
+import com.trainingandroid.domain.usecase.GetDetailMovieUseCaseImpl
+import com.trainingandroid.domain.usecase.GetPopulateMoviesUseCase
+import com.trainingandroid.domain.usecase.GetPopulateMoviesUseCaseImpl
+import com.trainingandroid.domain.usecase.GetUpcomingMoviesUseCase
+import com.trainingandroid.domain.usecase.GetUpcomingMoviesUseCaseImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import javax.inject.Singleton
-
 
 @Module
 @InstallIn(SingletonComponent::class)
 class AppModule {
     @Provides
-    @Singleton
-    fun provideRemoteService(): RemoteService {
+    fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://api.themoviedb.org/3/movie/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build().create()
+            .addCallAdapterFactory(NetworkResponseAdapterFactory())
+            .addConverterFactory(GsonConverterFactory.create()).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideRemoteService(retrofit: Retrofit): RemoteService {
+        return retrofit.create(RemoteService::class.java)
     }
 }
 

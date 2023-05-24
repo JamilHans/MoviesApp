@@ -46,12 +46,12 @@ class HomeViewModel @Inject constructor(
                 is ResultType.Error -> {
 
                     _stateUpcomingMovie.value =
-                        HomeState.UpComingMoviesState(error = response.message)
+                        HomeState.UpComingMoviesState(error = response.value.message)
                 }
 
                 is ResultType.Success -> {
                     _stateUpcomingMovie.value =
-                        HomeState.UpComingMoviesState(upComingMovies = response.data)
+                        HomeState.UpComingMoviesState(upComingMovies = response.value)
                 }
             }
 
@@ -70,12 +70,12 @@ class HomeViewModel @Inject constructor(
             when (response) {
                 is ResultType.Error -> {
                     _statePopulateMovie.value =
-                        HomeState.PopulateMoviesState(error = response.message)
+                        HomeState.PopulateMoviesState(error = response.value.message)
                 }
 
                 is ResultType.Success -> {
                     _statePopulateMovie.value =
-                        HomeState.PopulateMoviesState(populateMovies = response.data)
+                        HomeState.PopulateMoviesState(populateMovies = response.value)
                 }
             }
 
