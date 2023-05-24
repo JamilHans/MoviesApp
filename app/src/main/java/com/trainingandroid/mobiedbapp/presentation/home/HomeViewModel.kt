@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.trainingandroid.domain.model.Result
+import com.trainingandroid.domain.resource.ResultType
 import com.trainingandroid.domain.usecase.GetPopulateMoviesUseCase
 import com.trainingandroid.domain.usecase.GetUpcomingMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -43,13 +43,13 @@ class HomeViewModel @Inject constructor(
             _stateUpcomingMovie.value = HomeState.UpComingMoviesState(isLoading = false)
 
             when (response) {
-                is Result.Error -> {
+                is ResultType.Error -> {
 
                     _stateUpcomingMovie.value =
                         HomeState.UpComingMoviesState(error = response.message)
                 }
 
-                is Result.Success -> {
+                is ResultType.Success -> {
                     _stateUpcomingMovie.value =
                         HomeState.UpComingMoviesState(upComingMovies = response.data)
                 }
@@ -68,12 +68,12 @@ class HomeViewModel @Inject constructor(
             _statePopulateMovie.value = HomeState.PopulateMoviesState(isLoading = false)
 
             when (response) {
-                is Result.Error -> {
+                is ResultType.Error -> {
                     _statePopulateMovie.value =
                         HomeState.PopulateMoviesState(error = response.message)
                 }
 
-                is Result.Success -> {
+                is ResultType.Success -> {
                     _statePopulateMovie.value =
                         HomeState.PopulateMoviesState(populateMovies = response.data)
                 }
@@ -81,6 +81,5 @@ class HomeViewModel @Inject constructor(
 
         }
     }
-
 
 }

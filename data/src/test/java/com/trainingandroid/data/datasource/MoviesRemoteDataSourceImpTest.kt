@@ -6,7 +6,7 @@ import com.trainingandroid.data.model.movie.Dates
 import com.trainingandroid.data.model.movie.MovieResponse
 import com.trainingandroid.data.model.movie.WrappedListResponse
 import com.trainingandroid.data.model.moviedetail.MovieDetailResponse
-import com.trainingandroid.domain.model.Result
+import com.trainingandroid.domain.resource.ResultType
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -43,45 +43,45 @@ class MoviesRemoteDataSourceImpTest {
     @Test
     fun `Getting upcoming movie should return upcoming movie when return has success`() {
         runBlocking {
-            val successResult =
-                Result.Success(data = listMovies.body()?.results?.map { it.toDomainModel() })
+            val successResultType =
+                ResultType.Success(data = listMovies.body()?.results?.map { it.toDomainModel() })
             whenever(
                 remoteService.getUpcoming()
             ).thenReturn(
                 listMovies
             )
             val result = sut.getUpcomingMovies()
-            assertEquals(result, successResult)
+            assertEquals(result, successResultType)
         }
     }
 
     @Test
     fun `Getting populate movie should return populate movie when return has success`() {
         runBlocking {
-            val successResult =
-                Result.Success(data = listMovies.body()?.results?.map { it.toDomainModel() })
+            val successResultType =
+                ResultType.Success(data = listMovies.body()?.results?.map { it.toDomainModel() })
             whenever(
                 remoteService.getPopular()
             ).thenReturn(
                 listMovies
             )
             val result = sut.getPopulateMovies()
-            assertEquals(result, successResult)
+            assertEquals(result, successResultType)
         }
     }
 
     @Test
     fun `Getting detail movie should return detail movie when return has success`() {
         runBlocking {
-            val successResult =
-                Result.Success(data = detailMovie.body()?.toDomainModel())
+            val successResultType =
+                ResultType.Success(data = detailMovie.body()?.toDomainModel())
             whenever(
                 remoteService.getMovieDetail(1)
             ).thenReturn(
                 detailMovie
             )
             val result = sut.getDetailMovie(1)
-            assertEquals(result, successResult)
+            assertEquals(result, successResultType)
         }
     }
 }

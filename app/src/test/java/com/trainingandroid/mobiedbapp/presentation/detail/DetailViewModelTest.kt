@@ -1,7 +1,7 @@
 package com.trainingandroid.mobiedbapp.presentation.detail
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.trainingandroid.domain.model.Result
+import com.trainingandroid.domain.resource.ResultType
 import com.trainingandroid.domain.model.detail.DetailMovie
 import com.trainingandroid.domain.usecase.GetDetailMovieUseCase
 import com.trainingandroid.mobiedbapp.presentation.util.TestCoroutineRule
@@ -32,14 +32,14 @@ class DetailViewModelTest {
     @Test
     fun `Getting detail movie should return error when return has failure`() {
         runTest {
-            val errorResult = Result.Error<DetailMovie>(message = "", null)
+            val errorResultType = ResultType.Error<DetailMovie>()
             val id = 1
             coEvery {
                 getDetailMovieUseCase(id)
-            } returns errorResult
+            } returns errorResultType
 
             val detailState = DetailState(
-                error = errorResult.message,
+                error = errorResultType.message,
             )
 
             sut.getDetailMovie(id)
@@ -53,14 +53,14 @@ class DetailViewModelTest {
     @Test
     fun `Getting detail movie should return success when return has success`() {
         runTest {
-            val successResult = Result.Success<DetailMovie>(data = null)
+            val successResultType = ResultType.Success<DetailMovie>(data = null)
             val id = 1
             coEvery {
                 getDetailMovieUseCase(id)
-            } returns successResult
+            } returns successResultType
 
             val detailState = DetailState(
-                detailMovie = successResult.data,
+                detailMovie = successResultType.data,
             )
 
             sut.getDetailMovie(id)
@@ -86,11 +86,11 @@ class DetailViewModelTest {
     @Test
     fun `Getting detail movie should hide loading when finished`() {
         runTest {
-            val successResult = Result.Success<DetailMovie>(data = null)
+            val successResultType = ResultType.Success<DetailMovie>(data = null)
             val id = 1
             coEvery {
                 getDetailMovieUseCase(id)
-            } returns successResult
+            } returns successResultType
 
             val detailState = DetailState(
                 isLoading = false,

@@ -1,7 +1,7 @@
 package com.trainingandroid.mobiedbapp.presentation.home
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.trainingandroid.domain.model.Result
+import com.trainingandroid.domain.resource.ResultType
 import com.trainingandroid.domain.model.movie.Movies
 import com.trainingandroid.domain.usecase.GetPopulateMoviesUseCase
 import com.trainingandroid.domain.usecase.GetUpcomingMoviesUseCase
@@ -32,13 +32,13 @@ class HomeViewModelTest {
     @Test
     fun `Getting upcoming movie should return error when return has failure`() {
         runTest {
-            val errorResult = Result.Error<List<Movies>>(message = "", null)
+            val errorResultType = ResultType.Error<List<Movies>>()
             coEvery {
                 getUpcomingMoviesUseCase()
-            } returns errorResult
+            } returns errorResultType
 
             val homeState = HomeState.UpComingMoviesState(
-                error = errorResult.message,
+                error = errorResultType.message,
             )
 
             sut.stateUpcomingMovie
@@ -52,13 +52,13 @@ class HomeViewModelTest {
     @Test
     fun `Getting upcoming movie should return success when return has success`() {
         runTest {
-            val successResult = Result.Success<List<Movies>>(data = null)
+            val successResultType = ResultType.Success<List<Movies>>(data = null)
             coEvery {
                 getUpcomingMoviesUseCase()
-            } returns successResult
+            } returns successResultType
 
             val homeState = HomeState.UpComingMoviesState(
-                upComingMovies = successResult.data
+                upComingMovies = successResultType.data
             )
 
             sut.stateUpcomingMovie
@@ -83,10 +83,10 @@ class HomeViewModelTest {
     @Test
     fun `Getting upcoming movie should hide loading when finished`() {
         runTest {
-            val successResult = Result.Success<List<Movies>>(data = null)
+            val successResultType = ResultType.Success<List<Movies>>(data = null)
             coEvery {
                 getUpcomingMoviesUseCase()
-            } returns successResult
+            } returns successResultType
 
             val homeState = HomeState.UpComingMoviesState(
                 isLoading = false
@@ -103,13 +103,13 @@ class HomeViewModelTest {
     @Test
     fun `Getting populate movie should return error when return has failure`() {
         runTest {
-            val errorResult = Result.Error<List<Movies>>(message = "", null)
+            val errorResultType = ResultType.Error<List<Movies>>()
             coEvery {
                 getPopulateMoviesUseCase()
-            } returns errorResult
+            } returns errorResultType
 
             val homeState = HomeState.PopulateMoviesState(
-                error = errorResult.message,
+                error = errorResultType.message,
             )
 
             sut.statePopulateMovieL
@@ -123,13 +123,13 @@ class HomeViewModelTest {
     @Test
     fun `Getting populate movie should return success when return has success`() {
         runTest {
-            val successResult = Result.Success<List<Movies>>(data = null)
+            val successResultType = ResultType.Success<List<Movies>>(data = null)
             coEvery {
                 getPopulateMoviesUseCase()
-            } returns successResult
+            } returns successResultType
 
             val homeState = HomeState.PopulateMoviesState(
-                populateMovies = successResult.data
+                populateMovies = successResultType.data
             )
 
             sut.statePopulateMovieL
@@ -154,10 +154,10 @@ class HomeViewModelTest {
     @Test
     fun `Getting populate movie should hide loading when finished`() {
         runTest {
-            val successResult = Result.Success<List<Movies>>(data = null)
+            val successResultType = ResultType.Success<List<Movies>>(data = null)
             coEvery {
                 getPopulateMoviesUseCase()
-            } returns successResult
+            } returns successResultType
 
             val homeState = HomeState.PopulateMoviesState(
                 isLoading = false
