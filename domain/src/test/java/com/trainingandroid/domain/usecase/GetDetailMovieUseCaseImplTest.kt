@@ -56,7 +56,7 @@ class GetDetailMovieUseCaseImplTest {
     @Test
     fun `Getting detail movie should return error when return has failure`() {
         runBlocking {
-            val errorResultType = ResultType.Error<DetailMovie>(message = "", null)
+            val errorResultType = ResultType.Error<DetailMovie>()
             val id = 1
             whenever(
                 recipeRepository.getDetailMovie(id)

@@ -32,7 +32,7 @@ class DetailViewModelTest {
     @Test
     fun `Getting detail movie should return error when return has failure`() {
         runTest {
-            val errorResultType = ResultType.Error<DetailMovie>(message = "", null)
+            val errorResultType = ResultType.Error<DetailMovie>()
             val id = 1
             coEvery {
                 getDetailMovieUseCase(id)

@@ -30,7 +30,7 @@ class GetPopulateMoviesUseCaseImplTest {
     @Test
     fun `Getting populate movie should return error when return has failure`() {
         runBlocking {
-            val errorResultType = ResultType.Error<List<Movies>>(message = "", null)
+            val errorResultType = ResultType.Error<List<Movies>>()
             whenever(
                 recipeRepository.getPopulateMovies()
             ).thenReturn(

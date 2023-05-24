@@ -31,7 +31,7 @@ class GetUpcomingMoviesUseCaseImplTest {
     @Test
     fun `Getting upcoming movie should return error when return has failure`() {
         runBlocking {
-            val errorResultType = ResultType.Error<List<Movies>>(message = "", null)
+            val errorResultType = ResultType.Error<List<Movies>>()
             whenever(
                 recipeRepository.getUpcomingMovies()
             ).thenReturn(

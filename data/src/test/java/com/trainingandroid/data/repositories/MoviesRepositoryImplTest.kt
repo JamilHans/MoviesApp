@@ -60,7 +60,7 @@ class MoviesRepositoryImplTest {
     @Test
     fun `Getting upcoming movie should return error when return has failure`() {
         runBlocking {
-            val errorResultType = ResultType.Error<List<Movies>>(message = "", null)
+            val errorResultType = ResultType.Error<List<Movies>>()
             whenever(
                 moviesRemoteDataSource.getUpcomingMovies()
             ).thenReturn(
@@ -88,7 +88,7 @@ class MoviesRepositoryImplTest {
     @Test
     fun `Getting populate movie should return error when return has failure`() {
         runBlocking {
-            val errorResultType = ResultType.Error<List<Movies>>(message = "", null)
+            val errorResultType = ResultType.Error<List<Movies>>()
             whenever(
                 moviesRemoteDataSource.getPopulateMovies()
             ).thenReturn(
@@ -116,7 +116,7 @@ class MoviesRepositoryImplTest {
     @Test
     fun `Getting detail movie should return error when return has failure`() {
         runBlocking {
-            val errorResultType = ResultType.Error<DetailMovie>(message = "", null)
+            val errorResultType = ResultType.Error<DetailMovie>()
             whenever(
                 moviesRemoteDataSource.getDetailMovie(1)
             ).thenReturn(
