@@ -1,8 +1,9 @@
 package com.trainingandroid.domain.usecase
 
-import com.trainingandroid.domain.resource.ResultType
 import com.trainingandroid.domain.model.detail.DetailMovie
+import com.trainingandroid.domain.model.error.Error
 import com.trainingandroid.domain.repositories.MoviesRepository
+import com.trainingandroid.domain.resource.ResultType
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -56,7 +57,7 @@ class GetDetailMovieUseCaseImplTest {
     @Test
     fun `Getting detail movie should return error when return has failure`() {
         runBlocking {
-            val errorResultType = ResultType.Error<DetailMovie>()
+            val errorResultType = ResultType.Error<DetailMovie, Error>(Error())
             val id = 1
             whenever(
                 recipeRepository.getDetailMovie(id)
@@ -71,7 +72,7 @@ class GetDetailMovieUseCaseImplTest {
     @Test
     fun `Getting detail movie should return detail movie when return has success`() {
         runBlocking {
-            val successResultType = ResultType.Success(data = detailMovie)
+            val successResultType = ResultType.Success<DetailMovie, Error>(detailMovie)
             val id = 1
             whenever(
                 recipeRepository.getDetailMovie(id)

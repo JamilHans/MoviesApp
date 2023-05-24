@@ -1,12 +1,51 @@
 package com.trainingandroid.data.repositories
 
 import com.trainingandroid.data.datasource.MoviesRemoteDataSource
+import com.trainingandroid.data.mappers.toDomainModel
+import com.trainingandroid.domain.model.detail.DetailMovie
+import com.trainingandroid.domain.model.error.Error
+import com.trainingandroid.domain.model.movie.Movies
 import com.trainingandroid.domain.repositories.MoviesRepository
+import com.trainingandroid.domain.resource.ResultType
+
 
 class MoviesRepositoryImpl constructor(
     private val moviesRemoteDataSource: MoviesRemoteDataSource
 ) : MoviesRepository {
-    override suspend fun getUpcomingMovies() = moviesRemoteDataSource.getUpcomingMovies()
-    override suspend fun getPopulateMovies() = moviesRemoteDataSource.getPopulateMovies()
-    override suspend fun getDetailMovie(id: Int) = moviesRemoteDataSource.getDetailMovie(id)
+    override suspend fun getUpcomingMovies(): ResultType<List<Movies>, Error> {
+        return when (val result = moviesRemoteDataSource.getUpcomingMovies()) {
+            is ResultType.Error -> {
+                ResultType.Error(result.value)
+            }
+            is ResultType.Success -> {
+                ResultType.Success(result.value.map {
+                    it.toDomainModel()
+                })
+            }
+        }
+    }
+
+    override suspend fun getPopulateMovies(): ResultType<List<Movies>, Error> {
+        return when (val result = moviesRemoteDataSource.getPopulateMovies()) {
+            is ResultType.Error -> {
+                ResultType.Error(result.value)
+            }
+            is ResultType.Success -> {
+                ResultType.Success(result.value.map {
+                    it.toDomainModel()
+                })
+            }
+        }
+    }
+
+    override suspend fun getDetailMovie(id: Int): ResultType<DetailMovie, Error> {
+        return when (val result = moviesRemoteDataSource.getDetailMovie(id)) {
+            is ResultType.Error -> {
+                ResultType.Error(result.value)
+            }
+            is ResultType.Success -> {
+                ResultType.Success(result.value.toDomainModel())
+            }
+        }
+    }
 }

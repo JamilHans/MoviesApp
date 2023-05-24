@@ -5,6 +5,7 @@ import com.trainingandroid.domain.resource.ResultType
 import com.trainingandroid.domain.model.detail.DetailMovie
 import com.trainingandroid.domain.usecase.GetDetailMovieUseCase
 import com.trainingandroid.mobiedbapp.presentation.util.TestCoroutineRule
+import com.trainingandroid.domain.model.error.Error
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -22,6 +23,34 @@ class DetailViewModelTest {
     private val sut by lazy {
         DetailViewModel(getDetailMovieUseCase)
     }
+    private val detailMovie by lazy {
+        DetailMovie(
+            adult = true,
+            backdropPath = "sa",
+            budget = 1,
+            genres = emptyList(),
+            homepage = "s",
+            id = 1,
+            imdbId = "s",
+            originalLanguage = "a",
+            originalTitle = "a",
+            overview = "s",
+            popularity = 1.3,
+            posterPath = "as",
+            productionCompanies = emptyList(),
+            productionCountries = emptyList(),
+            releaseDate = "d",
+            revenue = 4,
+            runtime = 23,
+            spokenLanguages = emptyList(),
+            status = "a",
+            tagline = "s",
+            title = "a",
+            video = true,
+            voteAverage = 1.2,
+            voteCount = 1,
+        )
+    }
 
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
@@ -32,14 +61,14 @@ class DetailViewModelTest {
     @Test
     fun `Getting detail movie should return error when return has failure`() {
         runTest {
-            val errorResultType = ResultType.Error<DetailMovie>()
+            val errorResultType = ResultType.Error<DetailMovie, Error>(Error())
             val id = 1
             coEvery {
                 getDetailMovieUseCase(id)
             } returns errorResultType
 
             val detailState = DetailState(
-                error = errorResultType.message,
+                error = errorResultType.value.message,
             )
 
             sut.getDetailMovie(id)
@@ -53,14 +82,14 @@ class DetailViewModelTest {
     @Test
     fun `Getting detail movie should return success when return has success`() {
         runTest {
-            val successResultType = ResultType.Success<DetailMovie>(data = null)
+            val successResultType = ResultType.Success<DetailMovie, Error>(detailMovie)
             val id = 1
             coEvery {
                 getDetailMovieUseCase(id)
             } returns successResultType
 
             val detailState = DetailState(
-                detailMovie = successResultType.data,
+                detailMovie = successResultType.value,
             )
 
             sut.getDetailMovie(id)
@@ -70,6 +99,7 @@ class DetailViewModelTest {
             assertEquals(detailState, sut.state.value)
         }
     }
+
     @Test
     fun `Getting detail movie should show loading when initialization`() {
         runTest {
@@ -86,7 +116,7 @@ class DetailViewModelTest {
     @Test
     fun `Getting detail movie should hide loading when finished`() {
         runTest {
-            val successResultType = ResultType.Success<DetailMovie>(data = null)
+            val successResultType = ResultType.Success<DetailMovie, Error>(detailMovie)
             val id = 1
             coEvery {
                 getDetailMovieUseCase(id)
@@ -94,6 +124,7 @@ class DetailViewModelTest {
 
             val detailState = DetailState(
                 isLoading = false,
+                detailMovie = detailMovie,
             )
 
             sut.getDetailMovie(id)

@@ -1,8 +1,9 @@
 package com.trainingandroid.mobiedbapp.presentation.home
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.trainingandroid.domain.resource.ResultType
+import com.trainingandroid.domain.model.error.Error
 import com.trainingandroid.domain.model.movie.Movies
+import com.trainingandroid.domain.resource.ResultType
 import com.trainingandroid.domain.usecase.GetPopulateMoviesUseCase
 import com.trainingandroid.domain.usecase.GetUpcomingMoviesUseCase
 import com.trainingandroid.mobiedbapp.presentation.util.TestCoroutineRule
@@ -20,7 +21,7 @@ class HomeViewModelTest {
     private val getUpcomingMoviesUseCase = mockk<GetUpcomingMoviesUseCase>()
     private val getPopulateMoviesUseCase = mockk<GetPopulateMoviesUseCase>()
     private val sut by lazy {
-        HomeViewModel(getUpcomingMoviesUseCase,getPopulateMoviesUseCase)
+        HomeViewModel(getUpcomingMoviesUseCase, getPopulateMoviesUseCase)
     }
 
     @get:Rule
@@ -32,13 +33,13 @@ class HomeViewModelTest {
     @Test
     fun `Getting upcoming movie should return error when return has failure`() {
         runTest {
-            val errorResultType = ResultType.Error<List<Movies>>()
+            val errorResultType = ResultType.Error<List<Movies>, Error>(Error())
             coEvery {
                 getUpcomingMoviesUseCase()
             } returns errorResultType
 
             val homeState = HomeState.UpComingMoviesState(
-                error = errorResultType.message,
+                error = errorResultType.value.message,
             )
 
             sut.stateUpcomingMovie
@@ -52,13 +53,13 @@ class HomeViewModelTest {
     @Test
     fun `Getting upcoming movie should return success when return has success`() {
         runTest {
-            val successResultType = ResultType.Success<List<Movies>>(data = null)
+            val successResultType = ResultType.Success<List<Movies>, Error>(emptyList())
             coEvery {
                 getUpcomingMoviesUseCase()
             } returns successResultType
 
             val homeState = HomeState.UpComingMoviesState(
-                upComingMovies = successResultType.data
+                upComingMovies = successResultType.value
             )
 
             sut.stateUpcomingMovie
@@ -83,13 +84,14 @@ class HomeViewModelTest {
     @Test
     fun `Getting upcoming movie should hide loading when finished`() {
         runTest {
-            val successResultType = ResultType.Success<List<Movies>>(data = null)
+            val successResultType = ResultType.Success<List<Movies>, Error>(emptyList())
             coEvery {
                 getUpcomingMoviesUseCase()
             } returns successResultType
 
             val homeState = HomeState.UpComingMoviesState(
-                isLoading = false
+                isLoading = false,
+                upComingMovies = emptyList(),
             )
 
             sut.stateUpcomingMovie
@@ -103,13 +105,13 @@ class HomeViewModelTest {
     @Test
     fun `Getting populate movie should return error when return has failure`() {
         runTest {
-            val errorResultType = ResultType.Error<List<Movies>>()
+            val errorResultType = ResultType.Error<List<Movies>, Error>(Error())
             coEvery {
                 getPopulateMoviesUseCase()
             } returns errorResultType
 
             val homeState = HomeState.PopulateMoviesState(
-                error = errorResultType.message,
+                error = errorResultType.value.message,
             )
 
             sut.statePopulateMovieL
@@ -123,13 +125,13 @@ class HomeViewModelTest {
     @Test
     fun `Getting populate movie should return success when return has success`() {
         runTest {
-            val successResultType = ResultType.Success<List<Movies>>(data = null)
+            val successResultType = ResultType.Success<List<Movies>, Error>(emptyList())
             coEvery {
                 getPopulateMoviesUseCase()
             } returns successResultType
 
             val homeState = HomeState.PopulateMoviesState(
-                populateMovies = successResultType.data
+                populateMovies = successResultType.value,
             )
 
             sut.statePopulateMovieL
@@ -145,6 +147,7 @@ class HomeViewModelTest {
         runTest {
             val homeState = HomeState.PopulateMoviesState(
                 isLoading = true,
+                populateMovies = null,
             )
             sut.statePopulateMovieL
             assertEquals(homeState, sut.statePopulateMovieL.value)
@@ -154,13 +157,14 @@ class HomeViewModelTest {
     @Test
     fun `Getting populate movie should hide loading when finished`() {
         runTest {
-            val successResultType = ResultType.Success<List<Movies>>(data = null)
+            val successResultType = ResultType.Success<List<Movies>, Error>(emptyList())
             coEvery {
                 getPopulateMoviesUseCase()
             } returns successResultType
 
             val homeState = HomeState.PopulateMoviesState(
-                isLoading = false
+                isLoading = false,
+                populateMovies = emptyList(),
             )
 
             sut.statePopulateMovieL

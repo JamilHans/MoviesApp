@@ -28,11 +28,11 @@ class DetailViewModel @Inject constructor(
             _state.value = DetailState(isLoading = false)
             when (response) {
                 is ResultType.Error -> {
-                    _state.value = DetailState(error = response.message)
+                    _state.value = DetailState(error = response.value.message)
                 }
 
                 is ResultType.Success -> {
-                    _state.value = DetailState(detailMovie = response.data)
+                    _state.value = DetailState(detailMovie = response.value)
                 }
             }
         }
