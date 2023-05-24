@@ -70,6 +70,9 @@ dependencies {
     //Multidex
     implementation 'com.android.support:multidex:2.0.1'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+    //okhttp3
+    implementation 'com.squareup.okhttp3:okhttp:4.9.2'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.2'
     //Test
     testImplementation( "junit:junit:4.13.2")
     testImplementation( "org.mockito.kotlin:mockito-kotlin:4.1.0")
