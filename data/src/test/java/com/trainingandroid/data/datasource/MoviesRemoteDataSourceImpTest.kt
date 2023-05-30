@@ -21,39 +21,18 @@ import org.mockito.kotlin.whenever
 class MoviesRemoteDataSourceImpTest {
     @Mock
     lateinit var remoteService: RemoteService
-    private var listMoviesResponse: WrappedListResponse<MovieResponse> =
-        WrappedListResponse(
-            Dates("1", "1"), 1, emptyList(), 1, 2
-        )
+    private var listMoviesResponse: WrappedListResponse<MovieResponse> = WrappedListResponse(
+        Dates("1", "1"), 1, emptyList(), 1, 2
+    )
 
-    private var detailMovie: MovieDetailResponse = (
-            MovieDetailResponse(
-                true,
-                "a",
-                1,
-                emptyList(),
-                "",
-                1,
-                "",
-                "",
-                "",
-                "",
-                0.0,
-                "true",
-                emptyList(),
-                emptyList(),
-                "",
-                1,
-                1,
-                emptyList(),
-                "",
-                "",
-                "",
-                true,
-                0.0,
-                1,
-            )
-            )
+    private var detailMovie: MovieDetailResponse = (MovieDetailResponse(
+        "a",
+        "",
+        "",
+        1.0,
+        "",
+        "",
+    ))
 
     private lateinit var sut: MoviesRemoteDataSource
 
@@ -81,8 +60,7 @@ class MoviesRemoteDataSourceImpTest {
     fun `Getting populate movie should return populate movie when return has success`() {
         runBlocking {
             val apiResult = NetworkResponse.Success(listMoviesResponse)
-            val successResultType =
-                ResultType.Success<List<MovieResponse>, Error>(emptyList())
+            val successResultType = ResultType.Success<List<MovieResponse>, Error>(emptyList())
             whenever(
                 remoteService.getPopular()
             ).thenReturn(
@@ -97,8 +75,7 @@ class MoviesRemoteDataSourceImpTest {
     fun `Getting detail movie should return detail movie when return has success`() {
         runBlocking {
             val apiResult = NetworkResponse.Success(detailMovie)
-            val successResultType =
-                ResultType.Success<MovieDetailResponse, Error>(detailMovie)
+            val successResultType = ResultType.Success<MovieDetailResponse, Error>(detailMovie)
             whenever(
                 remoteService.getMovieDetail(1)
             ).thenReturn(

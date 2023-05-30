@@ -26,58 +26,22 @@ class MoviesRepositoryImplTest {
     }
     private val detailMovieResponse by lazy {
         MovieDetailResponse(
-            adult = true,
-            backdropPath = "sa",
-            budget = 1,
-            genreResponses = emptyList(),
-            homepage = "s",
-            id = 1,
-            imdbId = "s",
             originalLanguage = "a",
             originalTitle = "a",
             overview = "s",
             popularity = 1.3,
             posterPath = "as",
-            productionCompanies = emptyList(),
-            productionCountries = emptyList(),
             releaseDate = "d",
-            revenue = 4,
-            runtime = 23,
-            spokenLanguageResponses = emptyList(),
-            status = "a",
-            tagline = "s",
-            title = "a",
-            video = true,
-            voteAverage = 1.2,
-            voteCount = 1,
         )
     }
     private val detailMovie by lazy {
         DetailMovie(
-            adult = true,
-            backdropPath = "sa",
-            budget = 1,
-            emptyList(),
-            homepage = "s",
-            id = 1,
-            imdbId = "s",
             originalLanguage = "a",
             originalTitle = "a",
             overview = "s",
             popularity = 1.3,
             posterPath = "as",
-            productionCompanies = emptyList(),
-            productionCountries = emptyList(),
             releaseDate = "d",
-            revenue = 4,
-            runtime = 23,
-            emptyList(),
-            status = "a",
-            tagline = "s",
-            title = "a",
-            video = true,
-            voteAverage = 1.2,
-            voteCount = 1,
         )
     }
     private lateinit var sut: MoviesRepository
