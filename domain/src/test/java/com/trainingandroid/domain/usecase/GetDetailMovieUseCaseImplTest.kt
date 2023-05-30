@@ -20,30 +20,12 @@ class GetDetailMovieUseCaseImplTest {
     lateinit var recipeRepository: MoviesRepository
     private val detailMovie by lazy {
         DetailMovie(
-            adult = true,
-            backdropPath = "sa",
-            budget = 1,
-            genres = emptyList(),
-            homepage = "s",
-            id = 1,
-            imdbId = "s",
             originalLanguage = "a",
             originalTitle = "a",
             overview = "s",
             popularity = 1.3,
             posterPath = "as",
-            productionCompanies = emptyList(),
-            productionCountries = emptyList(),
             releaseDate = "d",
-            revenue = 4,
-            runtime = 23,
-            spokenLanguages = emptyList(),
-            status = "a",
-            tagline = "s",
-            title = "a",
-            video = true,
-            voteAverage = 1.2,
-            voteCount = 1,
         )
     }
 
