@@ -6,20 +6,21 @@ import com.trainingandroid.data.model.movie.WrappedListResponse
 import com.trainingandroid.domain.model.error.Error
 import com.trainingandroid.domain.resource.ResultType
 
-fun convertNetworkResponseToResultType(response: NetworkResponse<WrappedListResponse<MovieResponse>, Error>):
-        ResultType<List<MovieResponse>, Error> {
-    return when (response) {
+fun NetworkResponse<WrappedListResponse<MovieResponse>, Error>.convertToResultType()
+        : ResultType<List<MovieResponse>, Error> {
+    return when (this) {
         is NetworkResponse.ApiError -> {
             ResultType.Error(Error(message = "Encontramos un error en la solicitud"))
         }
         is NetworkResponse.NetworkError -> {
-            ResultType.Error(Error(message = "No se pudo conectar al servidor, revise su conexion a internet"))
+            ResultType.Error(Error(message = "No se pudo conectar al servidor, revise su conexión a internet"))
         }
         is NetworkResponse.Success -> {
-            ResultType.Success(response.body.results!!)
+            ResultType.Success(body.results?: emptyList() )
         }
         is NetworkResponse.UnknownError -> {
-            ResultType.Error(Error(message = response.error.message.orEmpty()))
+            ResultType.Error(Error(message = error.message.orEmpty()))
         }
     }
 }
+
