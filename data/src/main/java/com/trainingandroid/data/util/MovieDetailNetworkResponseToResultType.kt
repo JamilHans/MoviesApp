@@ -5,6 +5,7 @@ import com.trainingandroid.data.model.moviedetail.MovieDetailResponse
 import com.trainingandroid.domain.model.error.Error
 import com.trainingandroid.domain.resource.ResultType
 
+//TODO: https://trello.com/c/whshefS1
 fun NetworkResponse<MovieDetailResponse, Error>.convertToResultType()
         : ResultType<MovieDetailResponse, Error> {
     return when (this) {
