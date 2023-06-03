@@ -2,7 +2,6 @@ package com.trainingandroid.data.repositories
 
 import com.trainingandroid.data.datasource.MoviesRemoteDataSource
 import com.trainingandroid.data.mappers.toDomainModel
-import com.trainingandroid.domain.model.detail.DetailMovie
 import com.trainingandroid.domain.model.error.Error
 import com.trainingandroid.domain.model.movie.Movies
 import com.trainingandroid.domain.repositories.MoviesRepository
@@ -38,14 +37,4 @@ class MoviesRepositoryImpl constructor(
         }
     }
 
-    override suspend fun getDetailMovie(id: Int): ResultType<DetailMovie, Error> {
-        return when (val result = moviesRemoteDataSource.getDetailMovie(id)) {
-            is ResultType.Error -> {
-                ResultType.Error(result.value)
-            }
-            is ResultType.Success -> {
-                ResultType.Success(result.value.toDomainModel())
-            }
-        }
-    }
 }
