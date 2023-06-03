@@ -2,8 +2,8 @@ package com.trainingandroid.mobiedbapp.presentation.di
 
 import com.trainingandroid.data.api.NetworkResponseAdapterFactory
 import com.trainingandroid.data.api.RemoteService
-import com.trainingandroid.data.datasource.MovieDetailDataSource
-import com.trainingandroid.data.datasource.MovieDetailDataSourceImp
+import com.trainingandroid.data.datasource.MovieDetailRemoteDataSource
+import com.trainingandroid.data.datasource.MovieDetailRemoteDataSourceImp
 import com.trainingandroid.data.datasource.MoviesRemoteDataSource
 import com.trainingandroid.data.datasource.MoviesRemoteDataSourceImp
 import com.trainingandroid.data.repositories.MovieDetailRepositoryImpl
@@ -52,8 +52,8 @@ class AppBindModule {
     }
 
     @Provides
-    fun provideMovieDetailDataSource(remoteService: RemoteService): MovieDetailDataSource {
-        return MovieDetailDataSourceImp(remoteService)
+    fun provideMovieDetailRemoteDataSource(remoteService: RemoteService): MovieDetailRemoteDataSource {
+        return MovieDetailRemoteDataSourceImp(remoteService)
     }
 }
 
@@ -87,7 +87,7 @@ class RepositoryModule {
     }
 
     @Provides
-    fun provideMovieDetailRepository(movieDetailDataSource: MovieDetailDataSource): MovieDetailRepository{
-        return MovieDetailRepositoryImpl(movieDetailDataSource)
+    fun provideMovieDetailRepository(movieDetailRemoteDataSource: MovieDetailRemoteDataSource): MovieDetailRepository{
+        return MovieDetailRepositoryImpl(movieDetailRemoteDataSource)
     }
 }
