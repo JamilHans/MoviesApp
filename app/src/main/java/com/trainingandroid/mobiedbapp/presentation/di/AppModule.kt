@@ -2,9 +2,13 @@ package com.trainingandroid.mobiedbapp.presentation.di
 
 import com.trainingandroid.data.api.NetworkResponseAdapterFactory
 import com.trainingandroid.data.api.RemoteService
+import com.trainingandroid.data.datasource.MovieDetailRemoteDataSource
+import com.trainingandroid.data.datasource.MovieDetailRemoteDataSourceImp
 import com.trainingandroid.data.datasource.MoviesRemoteDataSource
 import com.trainingandroid.data.datasource.MoviesRemoteDataSourceImp
+import com.trainingandroid.data.repositories.MovieDetailRepositoryImpl
 import com.trainingandroid.data.repositories.MoviesRepositoryImpl
+import com.trainingandroid.domain.repositories.MovieDetailRepository
 import com.trainingandroid.domain.repositories.MoviesRepository
 import com.trainingandroid.domain.usecase.GetDetailMovieUseCase
 import com.trainingandroid.domain.usecase.GetDetailMovieUseCaseImpl
@@ -46,6 +50,11 @@ class AppBindModule {
     fun provideMoviesRemoteDataSource(remoteService: RemoteService): MoviesRemoteDataSource {
         return MoviesRemoteDataSourceImp(remoteService)
     }
+
+    @Provides
+    fun provideMovieDetailRemoteDataSource(remoteService: RemoteService): MovieDetailRemoteDataSource {
+        return MovieDetailRemoteDataSourceImp(remoteService)
+    }
 }
 
 @Module
@@ -53,8 +62,8 @@ class AppBindModule {
 class UseCaseModule {
 
     @Provides
-    fun provideGetDetailMovieUseCase(recipeRepository: MoviesRepository): GetDetailMovieUseCase {
-        return GetDetailMovieUseCaseImpl(recipeRepository)
+    fun provideGetDetailMovieUseCase(movieDetailRepository: MovieDetailRepository): GetDetailMovieUseCase {
+        return GetDetailMovieUseCaseImpl(movieDetailRepository)
     }
 
     @Provides
@@ -73,7 +82,12 @@ class UseCaseModule {
 @InstallIn(SingletonComponent::class)
 class RepositoryModule {
     @Provides
-    fun provideMoviesRepository(recipeRepository: MoviesRemoteDataSource): MoviesRepository {
-        return MoviesRepositoryImpl(recipeRepository)
+    fun provideMoviesRepository(moviesRemoteDataSource: MoviesRemoteDataSource): MoviesRepository {
+        return MoviesRepositoryImpl(moviesRemoteDataSource)
+    }
+
+    @Provides
+    fun provideMovieDetailRepository(movieDetailRemoteDataSource: MovieDetailRemoteDataSource): MovieDetailRepository{
+        return MovieDetailRepositoryImpl(movieDetailRemoteDataSource)
     }
 }
