@@ -25,45 +25,48 @@ class HomeViewModel @Inject constructor(
     private val _statePopulateMovie = MutableLiveData<HomeState.PopulateMoviesState>()
     val statePopulateMovieL: LiveData<HomeState.PopulateMoviesState> = _statePopulateMovie
 
+    var pageNowUpcomingMovies = 1
+    var pageTotalUpcomingMovies = 0
+
+    var pageNowPopulateMovies = 1
+    var pageTotalPopulateMovies = 0
 
     init {
-
-        getUpcomingMovies()
-        getPopulateMovies()
-
+        getUpcomingMovies(pageNowUpcomingMovies)
+        getPopulateMovies(pageNowPopulateMovies)
     }
 
-    private fun getUpcomingMovies() {
+    fun getUpcomingMovies(page: Int) {
         viewModelScope.launch {
             _stateUpcomingMovie.value = HomeState.UpComingMoviesState(isLoading = true)
 
             val response = withContext(Dispatchers.IO) {
-                getUpcomingMoviesUseCase()
+                getUpcomingMoviesUseCase(page)
             }
             _stateUpcomingMovie.value = HomeState.UpComingMoviesState(isLoading = false)
 
             when (response) {
                 is ResultType.Error -> {
-
                     _stateUpcomingMovie.value =
                         HomeState.UpComingMoviesState(error = response.value.message)
                 }
 
                 is ResultType.Success -> {
                     _stateUpcomingMovie.value =
-                        HomeState.UpComingMoviesState(upComingMovies = response.value)
+                        HomeState.UpComingMoviesState(upComingMovies = response.value.results)
+                    pageTotalUpcomingMovies = response.value.totalPages
                 }
             }
 
         }
     }
 
-    private fun getPopulateMovies() {
+    fun getPopulateMovies(page: Int) {
         viewModelScope.launch {
 
             _statePopulateMovie.value = HomeState.PopulateMoviesState(isLoading = true)
             val response = withContext(Dispatchers.IO) {
-                getPopulateMoviesUseCase()
+                getPopulateMoviesUseCase(page)
             }
             _statePopulateMovie.value = HomeState.PopulateMoviesState(isLoading = false)
 
@@ -75,7 +78,8 @@ class HomeViewModel @Inject constructor(
 
                 is ResultType.Success -> {
                     _statePopulateMovie.value =
-                        HomeState.PopulateMoviesState(populateMovies = response.value)
+                        HomeState.PopulateMoviesState(populateMovies = response.value.results)
+                    pageTotalPopulateMovies = response.value.totalPages
                 }
             }
 

@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.RecyclerView
 import com.trainingandroid.mobiedbapp.R
 import com.trainingandroid.mobiedbapp.databinding.FragmentHomeBinding
-import com.trainingandroid.domain.model.movie.Movies
 import com.trainingandroid.mobiedbapp.presentation.adapters.MovieAdapter
 import com.trainingandroid.mobiedbapp.presentation.common.toast
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,7 +19,6 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private val viewModel: HomeViewModel by viewModels()
-    private var movies: List<Movies> = listOf()
     private lateinit var adapterUpcoming: MovieAdapter
     private lateinit var adapterPopulate: MovieAdapter
 
@@ -46,14 +45,15 @@ class HomeFragment : Fragment() {
             val directions = HomeFragmentDirections.actionHomeFragmentToDetailFragment(id)
             Navigation.findNavController(binding.root).navigate(directions)
         }
-        binding.rvUpcomingReleases.adapter = adapterUpcoming
-
+        //binding.rvUpcomingReleases.adapter = adapterUpcoming
+        setUpcomingMoviesView()
         adapterPopulate = MovieAdapter() { movies ->
             val id = movies.id
             val directions = HomeFragmentDirections.actionHomeFragmentToDetailFragment(id)
             Navigation.findNavController(binding.root).navigate(directions)
         }
-        binding.rvPopulate.adapter = adapterPopulate
+        //binding.rvPopulate.adapter = adapterPopulate
+        setPopulateMoviesView()
     }
 
     private fun observers() {
@@ -90,7 +90,45 @@ class HomeFragment : Fragment() {
         state.upComingMovies?.let { moviesList ->
             adapterUpcoming.updateList(moviesList)
         }
+    }
 
+    private fun setUpcomingMoviesView() {
+        binding.rvUpcomingReleases.run {
+            setHasFixedSize(false)
+            adapter = adapterUpcoming
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    val linearLayoutManager =
+                        layoutManager as androidx.recyclerview.widget.LinearLayoutManager
+                    if (linearLayoutManager.itemCount == (linearLayoutManager.findLastVisibleItemPosition() + 1) &&
+                        viewModel.pageNowUpcomingMovies <= viewModel.pageTotalUpcomingMovies
+                    ) {
+                        viewModel.pageNowUpcomingMovies++
+                        viewModel.getUpcomingMovies(viewModel.pageNowUpcomingMovies)
+                    }
+                }
+            })
+        }
+    }
+    private fun setPopulateMoviesView() {
+        binding.rvPopulateMovies.run {
+            setHasFixedSize(false)
+            adapter = adapterPopulate
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    val linearLayoutManager =
+                        layoutManager as androidx.recyclerview.widget.LinearLayoutManager
+                    if (linearLayoutManager.itemCount == (linearLayoutManager.findLastVisibleItemPosition() + 1) &&
+                        viewModel.pageNowPopulateMovies <= viewModel.pageTotalPopulateMovies
+                    ) {
+                        viewModel.pageNowPopulateMovies++
+                        viewModel.getPopulateMovies(viewModel.pageNowPopulateMovies)
+                    }
+                }
+            })
+        }
     }
 
 }
