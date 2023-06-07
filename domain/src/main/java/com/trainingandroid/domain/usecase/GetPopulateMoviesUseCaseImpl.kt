@@ -5,5 +5,5 @@ import com.trainingandroid.domain.repositories.MoviesRepository
 class GetPopulateMoviesUseCaseImpl(
     private val moviesRepository: MoviesRepository
 ) : GetPopulateMoviesUseCase {
-    override suspend operator fun invoke() = moviesRepository.getPopulateMovies()
+    override suspend operator fun invoke(page: Int) = moviesRepository.getPopulateMovies(page)
 }

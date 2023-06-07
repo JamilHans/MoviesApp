@@ -5,29 +5,30 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
+import com.trainingandroid.domain.model.movie.Movies
 import com.trainingandroid.mobiedbapp.R
 import com.trainingandroid.mobiedbapp.databinding.ItemMovieBinding
-import com.trainingandroid.domain.model.movie.Movies
 
 class MovieAdapter constructor(
-    var movies: List<Movies> = listOf(),
-    var onItemSelected: (Movies) ->Unit,
-): RecyclerView.Adapter<MovieAdapter.ViewHolder>()
-{
+    private val movies: MutableList<Movies> = mutableListOf(),
+    private val onItemSelected: (Movies) -> Unit,
+) : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
+
     inner class ViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding: ItemMovieBinding = ItemMovieBinding.bind(itemView)
         private val link: String = "https://image.tmdb.org/t/p/w200"
 
-        fun bind(movie: Movies){
+        fun bind(movie: Movies) {
             Picasso.get().load(link + movie.posterPath).error(R.drawable.ic_launcher_background).into(binding.imgMovie)
-            binding.root.setOnClickListener{
+            binding.root.setOnClickListener {
                 onItemSelected(movie)
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val itemView: View = LayoutInflater.from(parent.context).inflate(R.layout.item_movie, parent, false)
+        val itemView: View =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_movie, parent, false)
         return ViewHolder(itemView)
     }
 
@@ -40,8 +41,9 @@ class MovieAdapter constructor(
         holder.bind(movie)
     }
 
-    fun updateList(movies:List<Movies>){
-        this.movies = movies
+    fun updateList(movies: List<Movies>) {
+        this.movies.addAll(movies)
         notifyDataSetChanged()
     }
+
 }
