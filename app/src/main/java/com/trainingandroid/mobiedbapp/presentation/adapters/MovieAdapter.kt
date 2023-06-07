@@ -10,8 +10,8 @@ import com.trainingandroid.mobiedbapp.R
 import com.trainingandroid.mobiedbapp.databinding.ItemMovieBinding
 
 class MovieAdapter constructor(
-    var movies: MutableList<Movies> = mutableListOf(),
-    var onItemSelected: (Movies) -> Unit,
+    private val movies: MutableList<Movies> = mutableListOf(),
+    private val onItemSelected: (Movies) -> Unit,
 ) : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
     inner class ViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -43,7 +43,6 @@ class MovieAdapter constructor(
 
     fun updateList(movies: List<Movies>) {
         this.movies.addAll(movies)
-        //this.movies = movies
         notifyDataSetChanged()
     }
 

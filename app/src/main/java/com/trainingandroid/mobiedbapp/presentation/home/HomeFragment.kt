@@ -1,10 +1,10 @@
 package com.trainingandroid.mobiedbapp.presentation.home
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
@@ -45,14 +45,12 @@ class HomeFragment : Fragment() {
             val directions = HomeFragmentDirections.actionHomeFragmentToDetailFragment(id)
             Navigation.findNavController(binding.root).navigate(directions)
         }
-        //binding.rvUpcomingReleases.adapter = adapterUpcoming
         setUpcomingMoviesView()
         adapterPopulate = MovieAdapter() { movies ->
             val id = movies.id
             val directions = HomeFragmentDirections.actionHomeFragmentToDetailFragment(id)
             Navigation.findNavController(binding.root).navigate(directions)
         }
-        //binding.rvPopulate.adapter = adapterPopulate
         setPopulateMoviesView()
     }
 
@@ -111,6 +109,7 @@ class HomeFragment : Fragment() {
             })
         }
     }
+
     private fun setPopulateMoviesView() {
         binding.rvPopulateMovies.run {
             setHasFixedSize(false)
