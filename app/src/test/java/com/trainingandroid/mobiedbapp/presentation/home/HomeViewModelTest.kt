@@ -2,6 +2,7 @@ package com.trainingandroid.mobiedbapp.presentation.home
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.trainingandroid.domain.model.error.Error
+import com.trainingandroid.domain.model.movie.MovieList
 import com.trainingandroid.domain.model.movie.Movies
 import com.trainingandroid.domain.resource.ResultType
 import com.trainingandroid.domain.usecase.GetPopulateMoviesUseCase
@@ -23,6 +24,7 @@ class HomeViewModelTest {
     private val sut by lazy {
         HomeViewModel(getUpcomingMoviesUseCase, getPopulateMoviesUseCase)
     }
+    private val page by lazy { 1 }
 
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
@@ -33,18 +35,18 @@ class HomeViewModelTest {
     @Test
     fun `Getting upcoming movie should return error when return has failure`() {
         runTest {
-            val errorResultType = ResultType.Error<List<Movies>, Error>(Error())
+            val errorResultType = ResultType.Error<MovieList<Movies>, Error>(Error())
             coEvery {
-                getUpcomingMoviesUseCase()
+                getUpcomingMoviesUseCase(page = page)
             } returns errorResultType
 
-            val homeState = HomeState.UpComingMoviesState(
-                error = errorResultType.value.message,
+            val homeState = HomeState.UpComingMoviesState.Error(
+                message = errorResultType.value.message,
             )
 
             sut.stateUpcomingMovie
             coVerify {
-                getUpcomingMoviesUseCase()
+                getUpcomingMoviesUseCase(page = page)
             }
             assertEquals(homeState, sut.stateUpcomingMovie.value)
         }
@@ -53,18 +55,25 @@ class HomeViewModelTest {
     @Test
     fun `Getting upcoming movie should return success when return has success`() {
         runTest {
-            val successResultType = ResultType.Success<List<Movies>, Error>(emptyList())
+            val successResultType =
+                ResultType.Success<MovieList<Movies>, Error>(
+                    MovieList(
+                        page = page,
+                        results = emptyList(),
+                        totalPages = 2
+                    )
+                )
             coEvery {
-                getUpcomingMoviesUseCase()
+                getUpcomingMoviesUseCase(page = page)
             } returns successResultType
 
-            val homeState = HomeState.UpComingMoviesState(
-                upComingMovies = successResultType.value
+            val homeState = HomeState.UpComingMoviesState.ShowUpcomingMovies(
+                upComingMovies = successResultType.value.results ?: emptyList()
             )
 
             sut.stateUpcomingMovie
             coVerify {
-                getUpcomingMoviesUseCase()
+                getUpcomingMoviesUseCase(page = 1)
             }
             assertEquals(homeState, sut.stateUpcomingMovie.value)
         }
@@ -73,7 +82,7 @@ class HomeViewModelTest {
     @Test
     fun `Getting upcoming movie should show loading when initialization`() {
         runTest {
-            val homeState = HomeState.UpComingMoviesState(
+            val homeState = HomeState.UpComingMoviesState.ShowLoading(
                 isLoading = true,
             )
             sut.stateUpcomingMovie
@@ -84,19 +93,21 @@ class HomeViewModelTest {
     @Test
     fun `Getting upcoming movie should hide loading when finished`() {
         runTest {
-            val successResultType = ResultType.Success<List<Movies>, Error>(emptyList())
+            val successResultType =
+                ResultType.Success<MovieList<Movies>, Error>(
+                    MovieList(page = page, results = emptyList(), totalPages = 2)
+                )
             coEvery {
-                getUpcomingMoviesUseCase()
+                getUpcomingMoviesUseCase(page)
             } returns successResultType
 
-            val homeState = HomeState.UpComingMoviesState(
-                isLoading = false,
+            val homeState = HomeState.UpComingMoviesState.ShowUpcomingMovies(
                 upComingMovies = emptyList(),
             )
 
             sut.stateUpcomingMovie
             coVerify {
-                getUpcomingMoviesUseCase()
+                getUpcomingMoviesUseCase(page = page)
             }
             assertEquals(homeState, sut.stateUpcomingMovie.value)
         }
@@ -105,18 +116,18 @@ class HomeViewModelTest {
     @Test
     fun `Getting populate movie should return error when return has failure`() {
         runTest {
-            val errorResultType = ResultType.Error<List<Movies>, Error>(Error())
+            val errorResultType = ResultType.Error<MovieList<Movies>, Error>(Error())
             coEvery {
-                getPopulateMoviesUseCase()
+                getPopulateMoviesUseCase(page = page)
             } returns errorResultType
 
-            val homeState = HomeState.PopulateMoviesState(
-                error = errorResultType.value.message,
+            val homeState = HomeState.PopulateMoviesState.Error(
+                message = errorResultType.value.message,
             )
 
             sut.statePopulateMovieL
             coVerify {
-                getPopulateMoviesUseCase()
+                getPopulateMoviesUseCase(page = page)
             }
             assertEquals(homeState, sut.statePopulateMovieL.value)
         }
@@ -125,18 +136,21 @@ class HomeViewModelTest {
     @Test
     fun `Getting populate movie should return success when return has success`() {
         runTest {
-            val successResultType = ResultType.Success<List<Movies>, Error>(emptyList())
+            val successResultType =
+                ResultType.Success<MovieList<Movies>, Error>(
+                    MovieList(page = page, results = emptyList(), totalPages = 2)
+                )
             coEvery {
-                getPopulateMoviesUseCase()
+                getPopulateMoviesUseCase(page = page)
             } returns successResultType
 
-            val homeState = HomeState.PopulateMoviesState(
-                populateMovies = successResultType.value,
+            val homeState = HomeState.PopulateMoviesState.ShowPopulateMovies(
+                populateMovies = successResultType.value.results ?: emptyList()
             )
 
             sut.statePopulateMovieL
             coVerify {
-                getPopulateMoviesUseCase()
+                getPopulateMoviesUseCase(page = page)
             }
             assertEquals(homeState, sut.statePopulateMovieL.value)
         }
@@ -145,9 +159,8 @@ class HomeViewModelTest {
     @Test
     fun `Getting populate movie should show loading when initialization`() {
         runTest {
-            val homeState = HomeState.PopulateMoviesState(
-                isLoading = true,
-                populateMovies = null,
+            val homeState = HomeState.PopulateMoviesState.ShowLoading(
+                isLoading = true
             )
             sut.statePopulateMovieL
             assertEquals(homeState, sut.statePopulateMovieL.value)
@@ -157,19 +170,21 @@ class HomeViewModelTest {
     @Test
     fun `Getting populate movie should hide loading when finished`() {
         runTest {
-            val successResultType = ResultType.Success<List<Movies>, Error>(emptyList())
+            val successResultType =
+                ResultType.Success<MovieList<Movies>, Error>(
+                    MovieList(page = page, results = emptyList(), totalPages = 2)
+                )
             coEvery {
-                getPopulateMoviesUseCase()
+                getPopulateMoviesUseCase(page = page)
             } returns successResultType
 
-            val homeState = HomeState.PopulateMoviesState(
-                isLoading = false,
+            val homeState = HomeState.PopulateMoviesState.ShowPopulateMovies(
                 populateMovies = emptyList(),
             )
 
             sut.statePopulateMovieL
             coVerify {
-                getPopulateMoviesUseCase()
+                getPopulateMoviesUseCase(page = page)
             }
             assertEquals(homeState, sut.statePopulateMovieL.value)
         }

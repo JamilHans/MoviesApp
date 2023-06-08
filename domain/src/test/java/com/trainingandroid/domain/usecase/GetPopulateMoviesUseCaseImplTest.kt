@@ -1,6 +1,7 @@
 package com.trainingandroid.domain.usecase
 
 import com.trainingandroid.domain.model.error.Error
+import com.trainingandroid.domain.model.movie.MovieList
 import com.trainingandroid.domain.model.movie.Movies
 import com.trainingandroid.domain.repositories.MoviesRepository
 import com.trainingandroid.domain.resource.ResultType
@@ -17,9 +18,12 @@ import org.mockito.kotlin.whenever
 class GetPopulateMoviesUseCaseImplTest {
     @Mock
     lateinit var recipeRepository: MoviesRepository
-    private val listPopulateMovies: List<Movies> by lazy {
-        emptyList()
-    }
+    private val page by lazy { 1 }
+    private val listPopulateMovies: MovieList<Movies> = MovieList(
+        page = page,
+        results = emptyList(),
+        totalPages = 2,
+    )
 
     private lateinit var sut: GetPopulateMoviesUseCase
 
@@ -31,13 +35,13 @@ class GetPopulateMoviesUseCaseImplTest {
     @Test
     fun `Getting populate movie should return error when return has failure`() {
         runBlocking {
-            val errorResultType = ResultType.Error<List<Movies>, Error>(Error())
+            val errorResultType = ResultType.Error<MovieList<Movies>, Error>(Error())
             whenever(
-                recipeRepository.getPopulateMovies()
+                recipeRepository.getPopulateMovies(page = page)
             ).thenReturn(
                 errorResultType
             )
-            val result = sut()
+            val result = sut(page = page)
             assertEquals(result, errorResultType)
         }
     }
@@ -45,13 +49,13 @@ class GetPopulateMoviesUseCaseImplTest {
     @Test
     fun `Getting populate movie should return populate movie when return has success`() {
         runBlocking {
-            val successResultType = ResultType.Success<List<Movies>, Error>(listPopulateMovies)
+            val successResultType = ResultType.Success<MovieList<Movies>, Error>(listPopulateMovies)
             whenever(
-                recipeRepository.getPopulateMovies()
+                recipeRepository.getPopulateMovies(page = page)
             ).thenReturn(
                 successResultType
             )
-            val result = sut()
+            val result = sut(page = page)
             assertEquals(result, successResultType)
         }
     }
