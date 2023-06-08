@@ -70,31 +70,27 @@ class HomeFragment : Fragment() {
 
     private fun updatePopulate(state: HomeState.PopulateMoviesState) {
         when (state) {
-            is HomeState.PopulateMoviesState.Error -> {
-                requireContext().toast(state.message)
-            }
+            is HomeState.PopulateMoviesState.Error -> requireContext().toast(state.message)
             is HomeState.PopulateMoviesState.ShowLoading -> {
                 if (state.isLoading) binding.progressBarPopulate.visibility = View.VISIBLE
                 else binding.progressBarPopulate.visibility = View.GONE
             }
-            is HomeState.PopulateMoviesState.ShowPopulateMovies -> {
-                adapterPopulate.updateList(state.populateMovies)
-            }
+            is HomeState.PopulateMoviesState.ShowPopulateMovies -> adapterPopulate.updateList(
+                state.populateMovies
+            )
         }
     }
 
     private fun updateUI(state: HomeState.UpComingMoviesState) {
         when (state) {
-            is HomeState.UpComingMoviesState.Error -> {
-                requireContext().toast(state.message)
-            }
+            is HomeState.UpComingMoviesState.Error -> requireContext().toast(state.message)
             is HomeState.UpComingMoviesState.ShowLoading -> {
                 if (state.isLoading) binding.progressBar.visibility = View.VISIBLE
                 else binding.progressBar.visibility = View.GONE
             }
-            is HomeState.UpComingMoviesState.ShowUpcomingMovies -> {
-                adapterUpcoming.updateList(state.upComingMovies)
-            }
+            is HomeState.UpComingMoviesState.ShowUpcomingMovies -> adapterUpcoming.updateList(
+                state.upComingMovies
+            )
         }
     }
 
