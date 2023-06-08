@@ -1,6 +1,7 @@
 package com.trainingandroid.domain.usecase
 
 import com.trainingandroid.domain.model.error.Error
+import com.trainingandroid.domain.model.movie.MovieList
 import com.trainingandroid.domain.model.movie.Movies
 import com.trainingandroid.domain.repositories.MoviesRepository
 import com.trainingandroid.domain.resource.ResultType
@@ -18,9 +19,12 @@ class GetUpcomingMoviesUseCaseImplTest {
 
     @Mock
     lateinit var recipeRepository: MoviesRepository
-    private val listUpcomingMovies: List<Movies> by lazy {
-        emptyList()
-    }
+    private val page by lazy { 1 }
+    private val listUpcomingMovies: MovieList<Movies> = MovieList(
+        page = page,
+        results = emptyList(),
+        totalPages = 2
+    )
 
     private lateinit var sut: GetUpcomingMoviesUseCase
 
@@ -32,13 +36,13 @@ class GetUpcomingMoviesUseCaseImplTest {
     @Test
     fun `Getting upcoming movie should return error when return has failure`() {
         runBlocking {
-            val errorResultType = ResultType.Error<List<Movies>, Error>(Error())
+            val errorResultType = ResultType.Error<MovieList<Movies>, Error>(Error())
             whenever(
-                recipeRepository.getUpcomingMovies()
+                recipeRepository.getUpcomingMovies(page = page)
             ).thenReturn(
                 errorResultType
             )
-            val result = sut()
+            val result = sut(page = page)
             assertEquals(result, errorResultType)
         }
     }
@@ -46,13 +50,13 @@ class GetUpcomingMoviesUseCaseImplTest {
     @Test
     fun `Getting upcoming movie should return upcoming movie when return has success`() {
         runBlocking {
-            val successResultType = ResultType.Success<List<Movies>, Error>(listUpcomingMovies)
+            val successResultType = ResultType.Success<MovieList<Movies>, Error>(listUpcomingMovies)
             whenever(
-                recipeRepository.getUpcomingMovies()
+                recipeRepository.getUpcomingMovies(page = page)
             ).thenReturn(
                 successResultType
             )
-            val result = sut()
+            val result = sut(page = page)
             assertEquals(result, successResultType)
         }
     }

@@ -19,8 +19,20 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private val viewModel: HomeViewModel by viewModels()
-    private lateinit var adapterUpcoming: MovieAdapter
-    private lateinit var adapterPopulate: MovieAdapter
+    private val adapterUpcoming: MovieAdapter by lazy {
+        MovieAdapter() { movies ->
+            val id = movies.id
+            val directions = HomeFragmentDirections.actionHomeFragmentToDetailFragment(id)
+            Navigation.findNavController(binding.root).navigate(directions)
+        }
+    }
+    private val adapterPopulate: MovieAdapter by lazy {
+        MovieAdapter() { movies ->
+            val id = movies.id
+            val directions = HomeFragmentDirections.actionHomeFragmentToDetailFragment(id)
+            Navigation.findNavController(binding.root).navigate(directions)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,17 +52,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun setUpAdapter() {
-        adapterUpcoming = MovieAdapter() { movies ->
-            val id = movies.id
-            val directions = HomeFragmentDirections.actionHomeFragmentToDetailFragment(id)
-            Navigation.findNavController(binding.root).navigate(directions)
-        }
+
         setUpcomingMoviesView()
-        adapterPopulate = MovieAdapter() { movies ->
-            val id = movies.id
-            val directions = HomeFragmentDirections.actionHomeFragmentToDetailFragment(id)
-            Navigation.findNavController(binding.root).navigate(directions)
-        }
+
         setPopulateMoviesView()
     }
 
@@ -65,28 +69,28 @@ class HomeFragment : Fragment() {
     }
 
     private fun updatePopulate(state: HomeState.PopulateMoviesState) {
-        state.isLoading.let { condition ->
-            if (condition) binding.progressBarPopulate.visibility = View.VISIBLE
-            else binding.progressBarPopulate.visibility = View.GONE
-        }
-        state.error?.let { messageError ->
-            requireContext().toast(messageError)
-        }
-        state.populateMovies?.let { moviesList ->
-            adapterPopulate.updateList(moviesList)
+        when (state) {
+            is HomeState.PopulateMoviesState.Error -> requireContext().toast(state.message)
+            is HomeState.PopulateMoviesState.ShowLoading -> {
+                if (state.isLoading) binding.progressBarPopulate.visibility = View.VISIBLE
+                else binding.progressBarPopulate.visibility = View.GONE
+            }
+            is HomeState.PopulateMoviesState.ShowPopulateMovies -> adapterPopulate.updateList(
+                state.populateMovies
+            )
         }
     }
 
     private fun updateUI(state: HomeState.UpComingMoviesState) {
-        state.isLoading.let { condition ->
-            if (condition) binding.progressBar.visibility = View.VISIBLE
-            else binding.progressBar.visibility = View.GONE
-        }
-        state.error?.let { messageError ->
-            requireContext().toast(messageError)
-        }
-        state.upComingMovies?.let { moviesList ->
-            adapterUpcoming.updateList(moviesList)
+        when (state) {
+            is HomeState.UpComingMoviesState.Error -> requireContext().toast(state.message)
+            is HomeState.UpComingMoviesState.ShowLoading -> {
+                if (state.isLoading) binding.progressBar.visibility = View.VISIBLE
+                else binding.progressBar.visibility = View.GONE
+            }
+            is HomeState.UpComingMoviesState.ShowUpcomingMovies -> adapterUpcoming.updateList(
+                state.upComingMovies
+            )
         }
     }
 
@@ -94,6 +98,7 @@ class HomeFragment : Fragment() {
         binding.rvUpcomingReleases.run {
             setHasFixedSize(false)
             adapter = adapterUpcoming
+            adapterUpcoming.itemCount
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)

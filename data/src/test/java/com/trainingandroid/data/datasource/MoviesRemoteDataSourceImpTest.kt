@@ -2,10 +2,8 @@ package com.trainingandroid.data.datasource
 
 import com.trainingandroid.data.api.NetworkResponse
 import com.trainingandroid.data.api.RemoteService
-import com.trainingandroid.data.model.movie.Dates
+import com.trainingandroid.data.model.movie.MovieListResponse
 import com.trainingandroid.data.model.movie.MovieResponse
-import com.trainingandroid.data.model.movie.WrappedListResponse
-import com.trainingandroid.data.model.moviedetail.MovieDetailResponse
 import com.trainingandroid.domain.model.error.Error
 import com.trainingandroid.domain.resource.ResultType
 import kotlinx.coroutines.runBlocking
@@ -21,19 +19,13 @@ import org.mockito.kotlin.whenever
 class MoviesRemoteDataSourceImpTest {
     @Mock
     lateinit var remoteService: RemoteService
-    private var listMoviesResponse: WrappedListResponse<MovieResponse> = WrappedListResponse(
-        Dates("1", "1"), 1, emptyList(), 1, 2
+    private val page by lazy { 1 }
+    private val totalPages by lazy { 2 }
+    private var listMoviesResponse: MovieListResponse<MovieResponse> = MovieListResponse(
+        page = page,
+        results = emptyList(),
+        totalPages = totalPages,
     )
-
-    private var detailMovie: MovieDetailResponse = (MovieDetailResponse(
-        "a",
-        "",
-        "",
-        1.0,
-        "",
-        "",
-    ))
-
     private lateinit var sut: MoviesRemoteDataSource
 
     @Before
@@ -45,13 +37,14 @@ class MoviesRemoteDataSourceImpTest {
     fun `Getting upcoming movie should return upcoming movie when return has success`() {
         runBlocking {
             val apiResult = NetworkResponse.Success(listMoviesResponse)
-            val successResultType = ResultType.Success<List<MovieResponse>, Error>(emptyList())
+            val successResultType =
+                ResultType.Success<MovieListResponse<MovieResponse>, Error>(listMoviesResponse)
             whenever(
-                remoteService.getUpcoming()
+                remoteService.getUpcoming(page = page)
             ).thenReturn(
                 apiResult
             )
-            val result = sut.getUpcomingMovies()
+            val result = sut.getUpcomingMovies(page = page)
             assertEquals(result, successResultType)
         }
     }
@@ -60,29 +53,16 @@ class MoviesRemoteDataSourceImpTest {
     fun `Getting populate movie should return populate movie when return has success`() {
         runBlocking {
             val apiResult = NetworkResponse.Success(listMoviesResponse)
-            val successResultType = ResultType.Success<List<MovieResponse>, Error>(emptyList())
+            val successResultType =
+                ResultType.Success<MovieListResponse<MovieResponse>, Error>(listMoviesResponse)
             whenever(
-                remoteService.getPopular()
+                remoteService.getPopular(page = page)
             ).thenReturn(
                 apiResult
             )
-            val result = sut.getPopulateMovies()
+            val result = sut.getPopulateMovies(page = page)
             assertEquals(result, successResultType)
         }
     }
 
-    @Test
-    fun `Getting detail movie should return detail movie when return has success`() {
-        runBlocking {
-            val apiResult = NetworkResponse.Success(detailMovie)
-            val successResultType = ResultType.Success<MovieDetailResponse, Error>(detailMovie)
-            whenever(
-                remoteService.getMovieDetail(1)
-            ).thenReturn(
-                apiResult
-            )
-            val result = sut.getDetailMovie(1)
-            assertEquals(result, successResultType)
-        }
-    }
 }
