@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.trainingandroid.mobiedbapp.R
 import com.trainingandroid.mobiedbapp.databinding.FragmentHomeBinding
@@ -96,6 +98,12 @@ class HomeFragment : Fragment() {
 
     private fun setUpcomingMoviesView() {
         binding.rvUpcomingReleases.run {
+            val dividerItemDecoration = DividerItemDecoration(context, RecyclerView.HORIZONTAL)
+            ResourcesCompat.getDrawable(resources, R.drawable.divider_drawable, null)
+                ?.let { drawable -> dividerItemDecoration.setDrawable(drawable) }
+            //val dividerItemDecoration = DividerItemDecoration(context,RecyclerView.HORIZONTAL)
+
+            addItemDecoration(dividerItemDecoration)
             setHasFixedSize(false)
             adapter = adapterUpcoming
             adapterUpcoming.itemCount
