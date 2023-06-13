@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.trainingandroid.mobiedbapp.R
 import com.trainingandroid.mobiedbapp.databinding.FragmentHomeBinding
@@ -96,9 +98,9 @@ class HomeFragment : Fragment() {
 
     private fun setUpcomingMoviesView() {
         binding.rvUpcomingReleases.run {
+            addDividerItemDecoration(this)
             setHasFixedSize(false)
             adapter = adapterUpcoming
-            adapterUpcoming.itemCount
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
@@ -117,6 +119,7 @@ class HomeFragment : Fragment() {
 
     private fun setPopulateMoviesView() {
         binding.rvPopulateMovies.run {
+            addDividerItemDecoration(this)
             setHasFixedSize(false)
             adapter = adapterPopulate
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -135,4 +138,13 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun addDividerItemDecoration(recyclerView: RecyclerView) {
+        val dividerItemDecoration =
+            DividerItemDecoration(recyclerView.context, RecyclerView.HORIZONTAL)
+        ResourcesCompat.getDrawable(resources, R.drawable.divider_drawable, null)
+            ?.let { drawable -> dividerItemDecoration.setDrawable(drawable) }
+        recyclerView.addItemDecoration(dividerItemDecoration)
+    }
+
 }
+
