@@ -42,7 +42,7 @@
             android:layout_height="40dp"
             android:isIndicator="true"
             android:numStars="5"
-            android:progressBackgroundTint="@color/grey"
+            android:progressBackgroundTint="@color/gray"
             android:progressTint="@color/yellow"
             android:scaleX=".5"
             android:scaleY=".5"

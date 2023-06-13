@@ -24,10 +24,8 @@ class MovieAdapter constructor(
                     setTitle(movie.title)
                     setRatingBar(movie.voteAverage.toFloat())
                 }
-                root.apply {
-                    setOnClickListener {
-                        onItemSelected(movie)
-                    }
+                root.setOnClickListener {
+                    onItemSelected(movie)
                 }
             }
         }
