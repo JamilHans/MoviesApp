@@ -18,12 +18,17 @@ class MovieAdapter constructor(
         private val link: String = "https://image.tmdb.org/t/p/w200"
 
         fun bind(movie: Movies) {
-            //Picasso.get().load(link + movie.posterPath).error(R.drawable.ic_launcher_background).into(binding.imgMovie)
-            binding.itemCardView.setImg(link + movie.posterPath)
-            binding.itemCardView.setTitle(movie.title)
-            binding.itemCardView.setRatingBar(movie.voteAverage.toFloat())
-            binding.root.setOnClickListener {
-                onItemSelected(movie)
+            binding.apply {
+                itemCardView.apply {
+                    setImg(link + movie.posterPath)
+                    setTitle(movie.title)
+                    setRatingBar(movie.voteAverage.toFloat())
+                }
+                root.apply {
+                    setOnClickListener {
+                        onItemSelected(movie)
+                    }
+                }
             }
         }
     }

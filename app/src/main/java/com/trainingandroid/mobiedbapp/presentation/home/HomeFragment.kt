@@ -98,15 +98,9 @@ class HomeFragment : Fragment() {
 
     private fun setUpcomingMoviesView() {
         binding.rvUpcomingReleases.run {
-            val dividerItemDecoration = DividerItemDecoration(context, RecyclerView.HORIZONTAL)
-            ResourcesCompat.getDrawable(resources, R.drawable.divider_drawable, null)
-                ?.let { drawable -> dividerItemDecoration.setDrawable(drawable) }
-            //val dividerItemDecoration = DividerItemDecoration(context,RecyclerView.HORIZONTAL)
-
-            addItemDecoration(dividerItemDecoration)
+            addDividerItemDecoration(this)
             setHasFixedSize(false)
             adapter = adapterUpcoming
-            adapterUpcoming.itemCount
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
@@ -125,6 +119,7 @@ class HomeFragment : Fragment() {
 
     private fun setPopulateMoviesView() {
         binding.rvPopulateMovies.run {
+            addDividerItemDecoration(this)
             setHasFixedSize(false)
             adapter = adapterPopulate
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -143,4 +138,13 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun addDividerItemDecoration(recyclerView: RecyclerView) {
+        val dividerItemDecoration =
+            DividerItemDecoration(recyclerView.context, RecyclerView.HORIZONTAL)
+        ResourcesCompat.getDrawable(resources, R.drawable.divider_drawable, null)
+            ?.let { drawable -> dividerItemDecoration.setDrawable(drawable) }
+        recyclerView.addItemDecoration(dividerItemDecoration)
+    }
+
 }
+
