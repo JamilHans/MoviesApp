@@ -6,4 +6,7 @@
     <string name="emovie">eMovie</string>
     <string name="content_releases">Proximos estrenos de temporada</string>
     <string name="poster_release">PosterRelease</string>
+    <string name="notification_default_channel_id">default_id</string>
+    <string name="notification_default_channel_description">This notifications for default</string>
+    <string name="notification_default_channel_name">Default</string>
 </resources>

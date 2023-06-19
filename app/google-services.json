@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "514173267539",
+    "project_id": "moviedbapp-c3174",
+    "storage_bucket": "moviedbapp-c3174.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:514173267539:android:35fa420bdc7a285f8a20a6",
+        "android_client_info": {
+          "package_name": "com.trainingandroid.mobiedbapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "514173267539-eknd1odej2i3kbdhe50ur28r2f6t16gp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbmLHmhJ1EpKcpYHXMNX2rnx4DBt_ho2w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "514173267539-eknd1odej2i3kbdhe50ur28r2f6t16gp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
